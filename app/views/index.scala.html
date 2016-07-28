@@ -1,0 +1,16 @@
+@(formCupom: Form[Usuario])
+@import helper._
+
+@main("Lista de Usuarios") {
+    <h3>Login</h3>
+    @helper.form(routes.Application.login()) {
+        @inputText(formCupom("email"), '_label -> "Email")
+        @inputPassword(formCupom("password"), '_label -> "Password")
+        <input type="submit" value="Login">
+    }
+    <hr>
+    <a href="@routes.Application.formularioNovoArquivo">Novo Arquivo</a>
+    <br>
+    <a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>
+}
+

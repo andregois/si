@@ -1,0 +1,25 @@
+@(arquivos: List[Arquivo])
+
+@main("Lista de Arquivos"){
+    @if(arquivos.isEmpty){
+        <h3>Não há Arquivos</h3>
+    } else {
+        <h3>Arquivos Cadastrados:</h3>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>cliente</th>
+                <th>valor</th>
+            </tr>
+            @for(arquivo <- arquivos){
+                <tr>
+                    <td>@arquivo.getId</td>
+                    <td>@arquivo.getNomeDoArquivo</td>
+                    <td>@arquivo.getConteudo</td>
+                </tr>
+            }
+        </table>
+    }
+    <hr>
+    <a href="@routes.Application.formularioNovoArquivo">Novo Arquivo</a>
+}

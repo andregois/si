@@ -1,0 +1,10 @@
+@(formCupom: Form[Usuario])
+@import helper._
+
+@main("Cadastrar Usuario") {
+    @helper.form(routes.Application.novoUsuario()) {
+        @inputText(formCupom("email"), '_label -> "Email")
+        @inputPassword(formCupom("password"), '_label -> "Password")
+        <input type="submit" value="Criar">
+    }
+}
