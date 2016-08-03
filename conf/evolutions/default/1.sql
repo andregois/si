@@ -13,7 +13,10 @@ create table arquivo (
 create table usuario (
   id                        bigint not null,
   email                     varchar(255),
+  username                  varchar(255),
   password                  varchar(255),
+  constraint uq_usuario_email unique (email),
+  constraint uq_usuario_username unique (username),
   constraint pk_usuario primary key (id))
 ;
 

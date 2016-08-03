@@ -6,7 +6,7 @@ GET     /                         controllers.Application.index()
 GET     /usuario/novo             controllers.Application.formularioNovoUsuario()
 POST    /usuario/novo             controllers.Application.novoUsuario()
 POST    /usuario/login            controllers.Application.login()
-GET    /usuario/login            controllers.Application.diretorio()
+GET     /usuario/login            controllers.Application.diretorio()
 GET     /arquivo/novo             controllers.Application.formularioNovoArquivo()
 POST    /arquivo/novo             controllers.Application.novoArquivo()
 
