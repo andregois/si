@@ -4,14 +4,14 @@
 # --- !Ups
 
 create table arquivo (
-  id                        bigint not null,
+  id                        varchar(255) not null,
   nome_do_arquivo           varchar(255),
   conteudo                  varchar(255),
   constraint pk_arquivo primary key (id))
 ;
 
 create table usuario (
-  id                        bigint not null,
+  id                        varchar(255) not null,
   email                     varchar(255),
   username                  varchar(255),
   password                  varchar(255),

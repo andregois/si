@@ -17,7 +17,6 @@ import static play.data.Form.form;
 
 public class Application extends Controller {
 
-
     public static Result index() {
 //      List<Usuario> usuarios = Ebean.createQuery(Usuario.class).findList();
         Form<Usuario> form = form(Usuario.class);
@@ -47,6 +46,21 @@ public class Application extends Controller {
         Usuario usuario = form.get();
         usuario.save();
         return redirect(routes.Application.index());
+    }
+
+    public static Result arquivo(String id) {
+        return ok(arquivo.render(getArquivoPorId(id)));
+    }
+
+
+    private static Arquivo getArquivoPorId(String id) {
+        List<Arquivo> listaArquivos = Ebean.createQuery(Arquivo.class).findList();
+        for (Arquivo a: listaArquivos) {
+            if (a.getId().equals(id)) {
+                return a;
+            }
+        }
+        return null;
     }
 
 

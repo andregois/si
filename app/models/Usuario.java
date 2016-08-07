@@ -10,18 +10,18 @@ import javax.persistence.Id;
 @Entity
 public class Usuario extends Model {
     @Id @GeneratedValue
-    private Long id;
+    private String id;
     @Column(unique = true)
     private String email;
     @Column(unique = true)
     private String username;
     private String password;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

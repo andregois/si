@@ -1,0 +1,13 @@
+@(arquivo: Arquivo)
+
+@main("Arquivo") {
+    <h2>@arquivo.getNomeDoArquivo</h2>
+    <table>
+            <tr>
+                <td>@arquivo.getConteudo</td>
+            </tr>
+    </table>
+
+    <hr>
+    <a href="@routes.Application.diretorio()">Voltar</a>
+}

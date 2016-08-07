@@ -4,7 +4,7 @@
 @main("Criar Arquivos") {
     @helper.form(routes.Application.novoArquivo()) {
         @inputText(formArquivo("nomeDoArquivo"), '_label -> "nome Do Arquivo")
-        @inputText(formArquivo("conteudo"), '_label -> "Conteudo")
+        @textarea(formArquivo("conteudo"), '_label -> "Conteudo")
         <input type="submit" value="Criar Pasta">
     }
 
