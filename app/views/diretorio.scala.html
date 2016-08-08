@@ -9,10 +9,12 @@
             <tr>
                 <th>Nome do Arquivo</th>
             </tr>
-            @for(arquivo <- arquivos){
-                <tr>
-                    <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>
-                </tr>
+            @for(arquivo <- arquivos) {
+                @if(arquivo.getPastaId.equals("main")) {
+                    <tr>
+                        <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>
+                    </tr>
+                }
             }
         </table>
     }
@@ -33,7 +35,7 @@
         </table>
     }
     <hr>
-    <a href="@routes.Application.formularioNovoArquivo()">Novo Arquivo</a>
+    <a href="@routes.Application.formularioNovoArquivo("main")">Novo Arquivo</a>
     <a href="@routes.Application.formularioNovaPasta()">Novo Pasta</a>
 
 

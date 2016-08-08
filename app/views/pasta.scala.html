@@ -1,4 +1,4 @@
-@(arquivos: List[Arquivo])
+@(arquivos: List[Arquivo], id: String)
 
 @main("Diretorio"){
     @if(arquivos.isEmpty){
@@ -18,7 +18,7 @@
     }
 
     <hr>
-    <a href="@routes.Application.formularioNovoArquivo()">Novo Arquivo</a>
+    <a href="@routes.Application.formularioNovoArquivo(id)">Novo Arquivo</a>
 
 
 }

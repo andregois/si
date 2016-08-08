@@ -30,9 +30,9 @@ public class Application extends Controller {
         return ok(diretorio.render(arquivos, pastas));
     }
 
-    public static Result formularioNovoArquivo() {
+    public static Result formularioNovoArquivo(String id) {
         Form<Arquivo> form = form(Arquivo.class);
-        return ok(criarArquivo.render(form));
+        return ok(criarArquivo.render(form, id));
     }
 
     public static Result formularioNovaPasta() {
@@ -73,7 +73,7 @@ public class Application extends Controller {
 
 
     public static Result pasta(String id) {
-        return ok(pasta.render(getArquivosPasta(id)));
+        return ok(pasta.render(getArquivosPasta(id), id));
     }
 
 
@@ -101,9 +101,9 @@ public class Application extends Controller {
 
     public static Result novoArquivo() {
         Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
-        if (form.hasErrors()) {
-            return badRequest(criarArquivo.render(form));
-        }
+//        if (form.hasErrors()) {
+//            return badRequest(criarArquivo.render(form);
+//        }
         Arquivo arquivo = form.get();
         arquivo.save();
         return redirect(routes.Application.diretorio());
