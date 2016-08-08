@@ -1,0 +1,10 @@
+@(formPasta: Form[Pasta])
+@import helper._
+
+@main("Criar Pasta") {
+    @helper.form(routes.Application.novaPasta()) {
+        @inputText(formPasta("nomeDaPasta"), '_label -> "Nome Da Pasta")
+        <input type="submit" value="Salvar">
+    }
+
+}

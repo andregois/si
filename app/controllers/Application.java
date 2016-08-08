@@ -2,6 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import models.Arquivo;
+import models.Pasta;
 import models.Usuario;
 import org.h2.engine.User;
 import play.*;
@@ -25,12 +26,18 @@ public class Application extends Controller {
 
     public static Result diretorio() {
         List<Arquivo> arquivos = Ebean.createQuery(Arquivo.class).findList();
-        return ok(diretorio.render(arquivos));
+        List<Pasta> pastas = Ebean.createQuery(Pasta.class).findList();
+        return ok(diretorio.render(arquivos, pastas));
     }
 
     public static Result formularioNovoArquivo() {
         Form<Arquivo> form = form(Arquivo.class);
         return ok(criarArquivo.render(form));
+    }
+
+    public static Result formularioNovaPasta() {
+        Form<Pasta> form = form(Pasta.class);
+        return ok(criarPasta.render(form));
     }
 
     public static Result formularioNovoUsuario() {
@@ -64,6 +71,34 @@ public class Application extends Controller {
     }
 
 
+
+    public static Result pasta(String id) {
+        return ok(pasta.render(getArquivosPasta(id)));
+    }
+
+
+//    private static Pasta getPastaPorId(String id) {
+//        List<Pasta> listaPasta = Ebean.createQuery(Pasta.class).findList();
+//        for (Pasta a: listaPasta) {
+//            if (a.getId().equals(id)) {
+//                return a;
+//            }
+//        }
+//        return null;
+//    }
+
+    private static List<Arquivo> getArquivosPasta(String id) {
+        List<Arquivo> arquivos = Ebean.createQuery(Arquivo.class).findList();
+        List<Arquivo> arq = new ArrayList<>();
+        for (Arquivo a: arquivos) {
+            if (a.getPastaId() != null && a.getPastaId().equals(id)) {
+                arq.add(a);
+            }
+        }
+        return arq;
+    }
+
+
     public static Result novoArquivo() {
         Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
         if (form.hasErrors()) {
@@ -73,6 +108,18 @@ public class Application extends Controller {
         arquivo.save();
         return redirect(routes.Application.diretorio());
     }
+
+    public static Result novaPasta() {
+        Form<Pasta> form = form(Pasta.class).bindFromRequest();
+        if (form.hasErrors()) {
+            return badRequest(criarPasta.render(form));
+        }
+        Pasta pasta = form.get();
+        pasta.save();
+        return redirect(routes.Application.diretorio());
+    }
+
+
 
     public static Result login() {
         //List<Arquivo> arquivos = Ebean.createQuery(Arquivo.class).findList();

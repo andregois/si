@@ -1,11 +1,11 @@
 @(formArquivo: Form[Arquivo])
 @import helper._
 
-@main("Criar Arquivos") {
+@main("Criar Arquivo") {
     @helper.form(routes.Application.novoArquivo()) {
-        @inputText(formArquivo("nomeDoArquivo"), '_label -> "nome Do Arquivo")
+        @inputText(formArquivo("nomeDoArquivo"), '_label -> "Nome Do Arquivo")
         @textarea(formArquivo("conteudo"), '_label -> "Conteudo")
-        <input type="submit" value="Criar Pasta">
+        <input type="submit" value="Salvar">
     }
 
 }

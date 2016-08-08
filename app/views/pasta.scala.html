@@ -1,4 +1,4 @@
-@(arquivos: List[Arquivo], pastas: List[Pasta])
+@(arquivos: List[Arquivo])
 
 @main("Diretorio"){
     @if(arquivos.isEmpty){
@@ -17,24 +17,8 @@
         </table>
     }
 
-    @if(pastas.isEmpty){
-        <h3>Não há Pastas</h3>
-    } else {
-        <h3>Pastas:</h3>
-        <table>
-            <tr>
-                <th>Nome do Arquivo</th>
-            </tr>
-            @for(pasta <- pastas){
-                <tr>
-                    <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getNomeDaPasta()</a></td>
-                </tr>
-            }
-        </table>
-    }
     <hr>
     <a href="@routes.Application.formularioNovoArquivo()">Novo Arquivo</a>
-    <a href="@routes.Application.formularioNovaPasta()">Novo Pasta</a>
 
 
 }
