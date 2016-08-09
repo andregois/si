@@ -1,7 +1,7 @@
 @(arquivos: List[Arquivo], pastas: List[Pasta])
 
-@main("Diretorio"){
-    @if(arquivos.isEmpty){
+@main("Diretorio") {
+    @if(arquivos.isEmpty) {
         <h3>Não há Arquivos</h3>
     } else {
         <h3>Arquivos Cadastrados:</h3>
@@ -19,15 +19,15 @@
         </table>
     }
 
-    @if(pastas.isEmpty){
+    @if(pastas.isEmpty) {
         <h3>Não há Pastas</h3>
     } else {
         <h3>Pastas:</h3>
         <table>
             <tr>
-                <th>Nome do Arquivo</th>
+                <th>Nome da Pasta</th>
             </tr>
-            @for(pasta <- pastas){
+            @for(pasta <- pastas) {
                 <tr>
                     <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getNomeDaPasta()</a></td>
                 </tr>
@@ -35,8 +35,39 @@
         </table>
     }
     <hr>
-    <a href="@routes.Application.formularioNovoArquivo("main")">Novo Arquivo</a>
-    <a href="@routes.Application.formularioNovaPasta()">Novo Pasta</a>
 
+    <table>
+        <tr>
+            <th>
 
+            @helper.form(action = routes.Application.formularioNovoArquivo("main")) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>
+                    </div>
+                </div>
+            }
+            </th>
+            <th>
+            @helper.form(action = routes.Application.formularioNovaPasta()) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>
+                    </div>
+                </div>
+            }
+            </th>
+        </tr>
+    </table>
+    @*<a href="@routes.Application.formularioNovoArquivo("main")">Novo Arquivo</a>*@
+    @*<h3> </h3>*@
+    @*<a href="@routes.Application.formularioNovaPasta()">Novo Pasta</a>*@
+
+    @helper.form(action = routes.Application.index()) {
+        <div class="form-group">
+            <div class="d-inline bg-success">
+                <button id="index" name="index" class="btn btn-default">Sair</button>
+            </div>
+        </div>
+    }
 }

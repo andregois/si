@@ -9,5 +9,23 @@
     </table>
 
     <hr>
-    <a href="@routes.Application.diretorio()">Voltar</a>
+    @if(arquivo.getPastaId.equals("main")){
+
+        @helper.form(action = routes.Application.diretorio()) {
+            <div class="form-group">
+                <div class="d-inline bg-success">
+                    <button id="back" name="back" class="btn btn-default">Voltar</button>
+                </div>
+            </div>
+        }
+
+    } else {
+        @helper.form(action = routes.Application.pasta(arquivo.getPastaId)) {
+            <div class="form-group">
+                <div class="d-inline bg-success">
+                    <button id="back" name="back" class="btn btn-default">Voltar</button>
+                </div>
+            </div>
+        }
+    }
 }

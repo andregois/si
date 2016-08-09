@@ -106,7 +106,11 @@ public class Application extends Controller {
 //        }
         Arquivo arquivo = form.get();
         arquivo.save();
-        return redirect(routes.Application.diretorio());
+        if(arquivo.getPastaId().equals("main")){
+            return redirect(routes.Application.diretorio());
+        }else{
+            return redirect(routes.Application.pasta(arquivo.getPastaId()));
+        }
     }
 
     public static Result novaPasta() {
@@ -129,7 +133,7 @@ public class Application extends Controller {
             return badRequest(cadastro.render(form));
         }
         Usuario a = form.get();
-        Usuario b = Ebean.createQuery(Usuario.class).where().eq("email", a.getEmail()).findUnique();
+        Usuario b = Ebean.createQuery(Usuario.class).where().eq("username", a.getUsername()).findUnique();
 
         if (b != null){
             return redirect(routes.Application.diretorio());

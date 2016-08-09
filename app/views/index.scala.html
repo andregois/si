@@ -12,9 +12,9 @@
             <legend></legend>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="email">E-mail / Username</label>
+                <label class="col-md-4 control-label" for="username">Username</label>
                 <div class="col-md-4">
-                    <input id="email" name="email" type="text" placeholder="" class="form-control input-md" required="">
+                    <input id="username" name="username" type="text" placeholder="" class="form-control input-md" required="">
 
                 </div>
             </div>
@@ -38,6 +38,14 @@
     </form>
     }
 
-    <a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>
+    @*<a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>*@
+
+    @helper.form(action = routes.Application.formularioNovoUsuario()) {
+        <div class="form-group">
+            <div class="d-inline bg-success">
+                <button id="new_user" name="new_user" class="btn btn-default">Novo Usuario</button>
+            </div>
+        </div>
+    }
 }
 

@@ -1,7 +1,7 @@
 @(arquivos: List[Arquivo], id: String)
 
-@main("Diretorio"){
-    @if(arquivos.isEmpty){
+@main("Diretorio") {
+    @if(arquivos.isEmpty) {
         <h3>Não há Arquivos</h3>
     } else {
         <h3>Arquivos Cadastrados:</h3>
@@ -9,7 +9,7 @@
             <tr>
                 <th>Nome do Arquivo</th>
             </tr>
-            @for(arquivo <- arquivos){
+            @for(arquivo <- arquivos) {
                 <tr>
                     <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>
                 </tr>
@@ -18,7 +18,32 @@
     }
 
     <hr>
-    <a href="@routes.Application.formularioNovoArquivo(id)">Novo Arquivo</a>
 
+    <table>
+        <tr>
+            <th>
 
+            @helper.form(action = routes.Application.formularioNovoArquivo(id)) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>
+                    </div>
+                </div>
+            }
+            </th>
+            <th>
+
+            @helper.form(action = routes.Application.diretorio()) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="back" name="back" class="btn btn-default">Voltar</button>
+                    </div>
+                </div>
+            }
+            </th>
+        </tr>
+    </table>
+    @*<a href="@routes.Application.formularioNovoArquivo(id)">Novo Arquivo</a>*@
+    @*<h3> </h3>*@
+    @*<a href="@routes.Application.diretorio()">Voltar</a>*@
 }
