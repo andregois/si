@@ -1,6 +1,7 @@
 @(arquivos: List[Arquivo], pastas: List[Pasta])
 
 @main("Diretorio") {
+    <span>@session().get("login")</span>
     @if(arquivos.isEmpty) {
         <h3>Não há Arquivos</h3>
     } else {
@@ -63,7 +64,7 @@
     @*<h3> </h3>*@
     @*<a href="@routes.Application.formularioNovaPasta()">Novo Pasta</a>*@
 
-    @helper.form(action = routes.Application.index()) {
+    @helper.form(action = routes.Application.deslogar()) {
         <div class="form-group">
             <div class="d-inline bg-success">
                 <button id="index" name="index" class="btn btn-default">Sair</button>

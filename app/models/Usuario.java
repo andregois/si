@@ -43,4 +43,13 @@ public class Usuario extends Model {
 
     public void setUsername(String username) { this.username = username; }
     // getters e setters
+
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

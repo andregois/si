@@ -3,12 +3,13 @@
 # ~~~~
 
 GET     /                                 controllers.Application.index()
-GET     /usuario/novo                     controllers.Application.formularioNovoUsuario()
-POST    /usuario/novo                     controllers.Application.novoUsuario()
-POST    /usuario/login                    controllers.Application.login()
-GET     /usuario/diretorio                controllers.Application.diretorio()
+GET     /cadastro                         controllers.Application.formularioNovoUsuario()
+POST    /cadastro                         controllers.Application.novoUsuario()
+POST    /login                    controllers.Application.login()
+POST   /deslogar                            controllers.Application.deslogar()
+GET     /diretorio                controllers.Application.diretorio()
 GET     /pasta/:id/novo                   controllers.Application.formularioNovoArquivo(id: String)
-POST    /pasta/arquivo/novo                   controllers.Application.novoArquivo()
+POST    /pasta/arquivo/novo               controllers.Application.novoArquivo()
 GET     /pasta/novo                       controllers.Application.formularioNovaPasta()
 POST    /pasta/novo                       controllers.Application.novaPasta()
 GET     /pasta/:id                        controllers.Application.pasta(id: String)
