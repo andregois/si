@@ -11,10 +11,12 @@
                 <th>Nome do Arquivo</th>
             </tr>
             @for(arquivo <- arquivos) {
-                @if(arquivo.getPastaId.equals("main")) {
-                    <tr>
-                        <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>
-                    </tr>
+                @if(arquivo.getUserId.equals(session().get("login"))) {
+                    @if(arquivo.getPastaId.equals("main")) {
+                        <tr>
+                            <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>
+                        </tr>
+                    }
                 }
             }
         </table>

@@ -5,6 +5,7 @@
     @helper.form(routes.Application.novoArquivo()) {
 
         <input type="hidden" name="PastaId" value="@id" />
+        <input type="hidden" name="UserId" value="@session().get("login")" />
 
         <form class="form-horizontal">
             <fieldset>
