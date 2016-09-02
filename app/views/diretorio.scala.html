@@ -11,13 +11,11 @@
                 <th>Nome do Arquivo</th>
             </tr>
             @for(arquivo <- arquivos) {
-@*//                @if(arquivo.isSharedWith((session().get("login")))) {*@
-@*//                    @if(arquivo.getPastaId.equals("main")) {*@
                         <tr>
-                            @*<td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>*@
+                            @*<td><a href="@routes.Application.arquivo(arquivo.getId())">*@
+                            <td>@arquivo.getContent()</td>
+                            @*</a></td>*@
                         </tr>
-@*//                    }*@
-@*//                }*@
             }
         </table>
     }
@@ -43,13 +41,13 @@
         <tr>
             <th>
 
-            @*//@helper.form(action = routes.Application.formularioNovoArquivo("main")) {*@
-                @*<div class="form-group">*@
-                    @*<div class="d-inline bg-success">*@
-                        @*<button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>*@
-                    @*</div>*@
-                @*</div>*@
-            @*}*@
+            @helper.form(action = routes.Application.formularioNovoArquivo(session().get("root"))) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>
+                    </div>
+                </div>
+            }
             </th>
             <th>
             @*//@helper.form(action = routes.Application.formularioNovaPasta()) {*@

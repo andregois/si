@@ -55,4 +55,14 @@ public class Pasta extends Model {
     public void setFiles(List<Arquivo> files) {
         this.files = files;
     }
+
+    @Override
+    public String toString() {
+        return "Pasta{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", folders=" + folders +
+                ", files=" + files +
+                '}';
+    }
 }

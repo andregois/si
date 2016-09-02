@@ -5,18 +5,23 @@
 GET     /                                 controllers.Application.index()
 GET     /cadastro                         controllers.Application.formularioNovoUsuario()
 POST    /cadastro                         controllers.Application.novoUsuario()
+
 POST    /login                            controllers.Application.login()
-GET     /pasta/:id/novo                   controllers.Application.formularioNovoArquivo(id: String)
-GET     /diretorio                        controllers.Application.diretorio()
 POST   /deslogar                          controllers.Application.deslogar()
-#POST    /pasta/arquivo/novo               controllers.Application.novoArquivo()
+
+GET     /diretorio                        controllers.Application.diretorio()
+
+GET     /pasta/:id/novo                   controllers.Application.formularioNovoArquivo(id: String)
+POST    /pasta/:id/novo                   controllers.Application.novoArquivo(id: String)
+
+GET     /pasta/:id                        controllers.Application.pasta(id: String)
+
 #
 #GET     /pasta/:id/compartilhar           controllers.Application.formularioCompartilhar(id: String)
 #POST    /pasta/arquivo/compartilhar       controllers.Application.compartilhar()
 #
 #GET     /pasta/novo                       controllers.Application.formularioNovaPasta()
 #POST    /pasta/novo                       controllers.Application.novaPasta()
-#GET     /pasta/:id                        controllers.Application.pasta(id: String)
 #GET     /arquivo/:id                      controllers.Application.arquivo(id: String)
 
 

@@ -54,12 +54,13 @@ public class Application extends Controller {
                 where().
                 and(eq("username", usuario.getUsername()), eq("password", usuario.getPassword())).findUnique();
 
-        if (user == null){
+        if (user == null) {
             return redirect(routes.Application.index());
         } else {
             Logger.info("Usuario Logado : " + usuario.toString());
             session("username", user.getUsername());
             session("id", user.getId());
+            session("root", user.getRoot().getId());
             Logger.info("Usuario Logado 2 : " + user.toString());
             return redirect(routes.Application.diretorio());
         }
@@ -87,6 +88,33 @@ public class Application extends Controller {
         return ok(criarArquivo.render(form, id));
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result novoArquivo(String id) {//id da pasta
+        Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
+        Arquivo arquivo = form.get();
+
+        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+        pasta.getFiles().add(arquivo);
+        Logger.info("Pasta: " + pasta.toString());
+        pasta.update();
+
+        return redirect(routes.Application.pasta(id));
+
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result pasta(String id) {
+
+        if (id == null || id.equals(session("root"))) {
+            return redirect(routes.Application.diretorio());
+        } else {
+            Pasta pastas = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+            Logger.info("Pasta: " + pastas.toString());
+            List<Arquivo> arquivos = pastas.getFiles();
+            return ok(pasta.render(arquivos, id));
+        }
+
+    }
 
 
 /*
@@ -135,17 +163,7 @@ public class Application extends Controller {
     }
 
 
-    @Security.Authenticated(Secured.class)
-    public static Result pasta(String id) {
-//        List<Arquivo> arquivos = Ebean.createQuery(Arquivo.class).findList();
-//        List<Arquivo> arq = new ArrayList<>();
-//        for (Arquivo a : arquivos) {
-//            if (a.getPastaId() != null && a.getPastaId().equals(id)) {
-//                arq.add(a);
-//            }
-//        }
-        return ok(pasta.render(arq, id));
-    }
+
 
 
     @Security.Authenticated(Secured.class)
