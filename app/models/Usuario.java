@@ -1,11 +1,11 @@
 package models;
 
+import com.google.common.collect.Lists;
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Usuario extends Model {
@@ -16,6 +16,17 @@ public class Usuario extends Model {
     @Column(unique = true)
     private String username;
     private String password;
+
+    @ManyToMany(mappedBy = "sharedWith")
+    private List<Arquivo> sharedWithMe;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pasta root;
+
+    public Usuario() {
+        this.sharedWithMe = Lists.newArrayList();
+        this.root = new Pasta();
+    }
 
     public String getId() {
         return id;
@@ -33,23 +44,48 @@ public class Usuario extends Model {
         this.email = email;
     }
 
-    public String getPassword() { return password; }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUsername() { return username; }
+    public List<Arquivo> getSharedWithMe() {
+        return sharedWithMe;
+    }
 
-    public void setUsername(String username) { this.username = username; }
-    // getters e setters
+    public void setSharedWithMe(List<Arquivo> sharedWithMe) {
+        this.sharedWithMe = sharedWithMe;
+    }
+
+    public Pasta getRoot() {
+        return root;
+    }
+
+    public void setRoot(Pasta root) {
+        this.root = root;
+    }
 
 
     @Override
     public String toString() {
         return "Usuario{" +
-                "username='" + username + '\'' +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", sharedWithMe=" + sharedWithMe +
+                ", root=" + root +
                 '}';
     }
 }

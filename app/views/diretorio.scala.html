@@ -1,7 +1,7 @@
 @(arquivos: List[Arquivo], pastas: List[Pasta])
 
 @main("Diretorio") {
-    <span>@session().get("login")</span>
+    <span>@session().get("username")</span>
     @if(arquivos.isEmpty) {
         <h3>Não há Arquivos</h3>
     } else {
@@ -11,13 +11,13 @@
                 <th>Nome do Arquivo</th>
             </tr>
             @for(arquivo <- arquivos) {
-                @if(arquivo.getUserId.equals(session().get("login"))) {
-                    @if(arquivo.getPastaId.equals("main")) {
+@*//                @if(arquivo.isSharedWith((session().get("login")))) {*@
+@*//                    @if(arquivo.getPastaId.equals("main")) {*@
                         <tr>
-                            <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>
+                            @*<td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getNomeDoArquivo()</a></td>*@
                         </tr>
-                    }
-                }
+@*//                    }*@
+@*//                }*@
             }
         </table>
     }
@@ -32,7 +32,7 @@
             </tr>
             @for(pasta <- pastas) {
                 <tr>
-                    <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getNomeDaPasta()</a></td>
+                    @*<td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getNomeDaPasta()</a></td>*@
                 </tr>
             }
         </table>
@@ -43,22 +43,22 @@
         <tr>
             <th>
 
-            @helper.form(action = routes.Application.formularioNovoArquivo("main")) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>
-                    </div>
-                </div>
-            }
+            @*//@helper.form(action = routes.Application.formularioNovoArquivo("main")) {*@
+                @*<div class="form-group">*@
+                    @*<div class="d-inline bg-success">*@
+                        @*<button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>*@
+                    @*</div>*@
+                @*</div>*@
+            @*}*@
             </th>
             <th>
-            @helper.form(action = routes.Application.formularioNovaPasta()) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>
-                    </div>
-                </div>
-            }
+            @*//@helper.form(action = routes.Application.formularioNovaPasta()) {*@
+                @*<div class="form-group">*@
+                    @*<div class="d-inline bg-success">*@
+                        @*<button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>*@
+                    @*</div>*@
+                @*</div>*@
+            @*}*@
             </th>
         </tr>
     </table>

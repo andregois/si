@@ -1,32 +1,27 @@
 package models;
 
 import javax.persistence.*;
+
+import com.google.common.collect.Lists;
 import play.db.ebean.Model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Arquivo extends Model {
 
     @Id @GeneratedValue
     private String id;
-    private String UserId;
-    private String PastaId;
-    private String nomeDoArquivo;
-    private String conteudo;
 
-    public String getPastaId() {
-        return PastaId;
-    }
+    @ManyToMany
+    private List<Usuario> sharedWith;
 
-    public void setPastaId(String pastaId) {
-        PastaId = pastaId;
-    }
+    private String name;
+    private String content;
 
-    public String getUserId() {
-        return UserId;
-    }
-
-    public void setUserId(String userId) {
-        UserId = userId;
+    public Arquivo() {
+        this.sharedWith = Lists.newArrayList();
     }
 
     public String getId() {
@@ -37,19 +32,27 @@ public class Arquivo extends Model {
         this.id = id;
     }
 
-    public String getNomeDoArquivo() {
-        return nomeDoArquivo;
+    public List<Usuario> getSharedWith() {
+        return sharedWith;
     }
 
-    public void setNomeDoArquivo(String nomeDoArquivo) {
-        this.nomeDoArquivo = nomeDoArquivo;
+    public void setSharedWith(List<Usuario> sharedWith) {
+        this.sharedWith = sharedWith;
     }
 
-    public String getConteudo() {
-        return conteudo;
+    public String getName() {
+        return name;
     }
 
-    public void setConteudo(String conteudo) {
-        this.conteudo = conteudo;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -2,40 +2,40 @@
 @import helper._
 
 @main("Criar Arquivo") {
-    @helper.form(routes.Application.novoArquivo()) {
+@*//    @helper.form(routes.Application.novoArquivo()) {*@
 
-        <input type="hidden" name="PastaId" value="@id" />
-        <input type="hidden" name="UserId" value="@session().get("login")" />
+        @*<input type="hidden" name="PastaId" value="@id" />*@
+        @*<input type="hidden" name="Dono" value="@session().get("login")" />*@
 
-        <form class="form-horizontal">
-            <fieldset>
-                <legend></legend>
+        @*<form class="form-horizontal">*@
+            @*<fieldset>*@
+                @*<legend></legend>*@
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="nomeDoArquivo">Nome Do Arquivo</label>
-                    <div class="col-md-4">
-                        <input id="nomeDoArquivo" name="nomeDoArquivo" type="text" placeholder="" class="form-control input-md" required="">
+                @*<div class="form-group">*@
+                    @*<label class="col-md-4 control-label" for="nomeDoArquivo">Nome Do Arquivo</label>*@
+                    @*<div class="col-md-4">*@
+                        @*<input id="name_input" name="name" type="text" placeholder="" class="form-control input-md" required="">*@
 
-                    </div>
-                </div>
+                    @*</div>*@
+                @*</div>*@
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="conteudo">Conteudo</label>
-                    <div class="col-md-4">
-                        <textarea id="conteudo" name="conteudo" rows="5" placeholder="" class="form-control input-md" required=""></textarea>
+                @*<div class="form-group">*@
+                    @*<label class="col-md-4 control-label" for="conteudo">Conteudo</label>*@
+                    @*<div class="col-md-4">*@
+                        @*<textarea id="content_input" name="content" rows="5" placeholder="" class="form-control input-md" required=""></textarea>*@
 
-                    </div>
-                </div>
+                    @*</div>*@
+                @*</div>*@
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="entry_button"></label>
-                    <div class="col-md-4">
-                        <button id="entry_button" name="entry_button" class="btn btn-primary">Salvar</button>
-                    </div>
-                </div>
+                @*<div class="form-group">*@
+                    @*<label class="col-md-4 control-label" for="entry_button"></label>*@
+                    @*<div class="col-md-4">*@
+                        @*<button id="entry_button" name="entry_button" class="btn btn-primary">Salvar</button>*@
+                    @*</div>*@
+                @*</div>*@
 
-            </fieldset>
-        </form>
+            @*</fieldset>*@
+        @*</form>*@
 
 
 
@@ -43,6 +43,6 @@
 @*//        @textarea(formArquivo("conteudo"), '_label -> "Conteudo")*@
         @*<input type="hidden" name="PastaId" value="@id" />*@
         @*<input type="submit" value="Salvar">*@
-    }
+@*//    }*@
 
 }

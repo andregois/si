@@ -1,15 +1,17 @@
 @(arquivo: Arquivo)
 
 @main("Arquivo") {
-    <h2>@arquivo.getNomeDoArquivo</h2>
+    <h2>@arquivo.getName</h2>
     <table>
             <tr>
-                <td>@arquivo.getConteudo</td>
+                <td>@arquivo.getContent</td>
             </tr>
     </table>
 
     <hr>
-    @if(arquivo.getPastaId.equals("main")){
+
+
+@*//    @if(arquivo.getPastaId.equals("main")){*@
 
         @helper.form(action = routes.Application.diretorio()) {
             <div class="form-group">
@@ -17,15 +19,25 @@
                     <button id="back" name="back" class="btn btn-default">Voltar</button>
                 </div>
             </div>
-        }
+@*//        }*@
 
-    } else {
-        @helper.form(action = routes.Application.pasta(arquivo.getPastaId)) {
-            <div class="form-group">
-                <div class="d-inline bg-success">
-                    <button id="back" name="back" class="btn btn-default">Voltar</button>
-                </div>
-            </div>
-        }
+@*//    } else {*@
+
+@*//        @helper.form(action = routes.Application.pasta(arquivo.getPastaId)) {*@
+            @*<div class="form-group">*@
+                @*<div class="d-inline bg-success">*@
+                    @*<button id="back" name="back" class="btn btn-default">Voltar</button>*@
+                @*</div>*@
+            @*</div>*@
+@*//        }*@
+
+
     }
+@*//    @helper.form(action = routes.Application.formularioCompartilhar(arquivo.getId)) {*@
+        @*<div class="form-group">*@
+            @*<div class="d-inline bg-success">*@
+                @*<button id="compartilhar" name="compartilhar" class="btn btn-default">Compartilhado</button>*@
+            @*</div>*@
+        @*</div>*@
+    @*}*@
 }

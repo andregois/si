@@ -1,26 +1,27 @@
 package models;
 
+import com.google.common.collect.Lists;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Pasta extends Model {
 
     @Id @GeneratedValue
     private String id;
-    private String UserId;
-    private String nomeDaPasta;
+    private String name;
 
+//    @OneToMany(cascade = CascadeType.ALL)
+    private List<Pasta> folders;
 
-    public String getPastaId() {
-        return UserId;
-    }
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Arquivo> files;
 
-    public void setPastaId(String userId) {
-        UserId = userId;
+    public Pasta() {
+        this.folders = Lists.newArrayList();
+        this.files = Lists.newArrayList();
     }
 
     public String getId() {
@@ -31,12 +32,27 @@ public class Pasta extends Model {
         this.id = id;
     }
 
-    public String getNomeDaPasta() {
-        return nomeDaPasta;
+    public String getName() {
+        return name;
     }
 
-    public void setNomeDaPasta(String nomeDaPasta) {
-        this.nomeDaPasta = nomeDaPasta;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public List<Pasta> getFolders() {
+        return folders;
+    }
+
+    public void setFolders(List<Pasta> folders) {
+        this.folders = folders;
+    }
+
+    public List<Arquivo> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<Arquivo> files) {
+        this.files = files;
+    }
 }
