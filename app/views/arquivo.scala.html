@@ -20,6 +20,15 @@
             }
             </th>
             <th>
+            @helper.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_folder" name="new_folder" class="btn btn-default">Editar Arquivo</button>
+                    </div>
+                </div>
+            }
+            </th>
+            <th>
             @helper.form(action = routes.Application.diretorio()) {
                 <div class="form-group">
                     <div class="d-inline bg-success">

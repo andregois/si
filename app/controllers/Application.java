@@ -93,11 +93,35 @@ public class Application extends Controller {
         pasta.getFiles().add(arquivo);
         Logger.info("Pasta: " + pasta.toString());
         pasta.update();
-//        arquivo.save();
         return redirect(routes.Application.pasta(id));
 
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result formularioEditarArquivo(String id) {
+        Form<Arquivo> form = form(Arquivo.class);
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        return ok(editarArquivo.render(form, id, arq));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result editarArquivo(String id) {//id da pasta
+        Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
+        Arquivo arquivo = form.get();
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        arq.setName(arquivo.getName());
+        arq.setContent(arquivo.getContent());
+        arq.update();
+        Logger.info("Pasta: " + arq.toString());
+
+//        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+//        int index = pasta.getFiles().indexOf(arq);
+//        pasta.getFiles().get(index).setContent(arquivo.getContent());
+//        pasta.getFiles().get(index).setName(arquivo.getName());
+//        pasta.update();
+        return redirect(routes.Application.arquivo(id));
+
+    }
 
     @Security.Authenticated(Secured.class)
     public static Result arquivo(String id) {
@@ -139,8 +163,8 @@ public class Application extends Controller {
 
         return redirect(routes.Application.pasta(id));
 
-//        return redirect(routes.Application.diretorio());
     }
+
 
     @Security.Authenticated(Secured.class)
     public static Result formularioCompartilhar(String id) {
