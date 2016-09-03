@@ -28,7 +28,7 @@
             </tr>
             @for(pasta <- pastas) {
                 <tr>
-                    @*<td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getNomeDaPasta()</a></td>*@
+                    <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a></td>
                 </tr>
             }
         </table>
@@ -48,13 +48,13 @@
             }
             </th>
             <th>
-            @*//@helper.form(action = routes.Application.formularioNovaPasta()) {*@
-                @*<div class="form-group">*@
-                    @*<div class="d-inline bg-success">*@
-                        @*<button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>*@
-                    @*</div>*@
-                @*</div>*@
-            @*}*@
+            @helper.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>
+                    </div>
+                </div>
+            }
             </th>
         </tr>
     </table>

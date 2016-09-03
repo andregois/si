@@ -79,6 +79,8 @@ public class Application extends Controller {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
         Logger.info("User" + user.toString());
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
+        Logger.info("arquivos: " + raiz.getFiles().toString());
+        Logger.info("pastas: " + raiz.getFolders().toString());
         return ok(diretorio.render(raiz.getFiles(), raiz.getFolders()));
     }
 
@@ -97,15 +99,23 @@ public class Application extends Controller {
         pasta.getFiles().add(arquivo);
         Logger.info("Pasta: " + pasta.toString());
         pasta.update();
-
+        arquivo.save();
         return redirect(routes.Application.pasta(id));
 
+    }
+
+
+    @Security.Authenticated(Secured.class)
+    public static Result arquivo(String id) {
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        return ok(arquivo.render(arq));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result pasta(String id) {
 
         if (id == null || id.equals(session("root"))) {
+            Logger.info("Redirecionando diretorio: ");
             return redirect(routes.Application.diretorio());
         } else {
             Pasta pastas = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
@@ -117,32 +127,29 @@ public class Application extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result arquivo(String id) {
-        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
-        return ok(arquivo.render(arq));
+    public static Result formularioNovaPasta(String id) {
+        Form<Pasta> form = form(Pasta.class);
+        return ok(criarPasta.render(form, id));
     }
+
+    @Security.Authenticated(Secured.class)
+    public static Result novaPasta(String id) {
+        Form<Pasta> form = form(Pasta.class).bindFromRequest();
+
+        Pasta pasta = form.get();
+
+        Pasta pastaPai = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+        pastaPai.getFolders().add(pasta);
+        Logger.info("PastaPai: " + pastaPai.toString());
+        pastaPai.update();
+
+        return redirect(routes.Application.pasta(id));
+
+//        return redirect(routes.Application.diretorio());
+    }
+
 
 /*
-    @Security.Authenticated(Secured.class)
-    public static Result novoArquivo() {
-        Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
-        Arquivo arquivo = form.get();
-
-//        Compartilhado comp = new Compartilhado();
-//        comp.setId(arquivo.getId());
-//        comp.setUser(arquivo.getDono());
-//        arquivo.compartilhar(comp);
-//        Logger.info("Criando donos" + arquivo.getCompartilhado().toString());
-//        comp.save();
-//        arquivo.save();
-//        Logger.info("Salvou" + arquivo.toString());
-//        if (arquivo.getPastaId().equals("main")) {
-//            return redirect(routes.Application.diretorio());
-//        } else {
-        return redirect(routes.Application.pasta(arquivo.getPastaId()));
-//        }
-    }
-
 
     @Security.Authenticated(Secured.class)
     public static Result formularioNovaPasta() {
@@ -182,16 +189,7 @@ public class Application extends Controller {
         return null;
     }
 
-    @Security.Authenticated(Secured.class)
-    public static Result novaPasta() {
-//        Form<Pasta> form = form(Pasta.class).bindFromRequest();
-//        if (form.hasErrors()) {
-//            return badRequest(criarPasta.render(form));
-//        }
-//        Pasta pasta = form.get();
-//        pasta.save();
-        return redirect(routes.Application.diretorio());
-    }
+
 
 
     @Security.Authenticated(Secured.class)

@@ -14,6 +14,7 @@ create table arquivo (
 create table pasta (
   id                        varchar(255) not null,
   name                      varchar(255),
+  pai_id                    varchar(255),
   constraint pk_pasta primary key (id))
 ;
 
@@ -42,8 +43,10 @@ create sequence usuario_seq;
 
 alter table arquivo add constraint fk_arquivo_pasta_1 foreign key (pasta_id) references pasta (id) on delete restrict on update restrict;
 create index ix_arquivo_pasta_1 on arquivo (pasta_id);
-alter table usuario add constraint fk_usuario_root_2 foreign key (root_id) references pasta (id) on delete restrict on update restrict;
-create index ix_usuario_root_2 on usuario (root_id);
+alter table pasta add constraint fk_pasta_pai_2 foreign key (pai_id) references pasta (id) on delete restrict on update restrict;
+create index ix_pasta_pai_2 on pasta (pai_id);
+alter table usuario add constraint fk_usuario_root_3 foreign key (root_id) references pasta (id) on delete restrict on update restrict;
+create index ix_usuario_root_3 on usuario (root_id);
 
 
 

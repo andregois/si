@@ -13,7 +13,10 @@ public class Pasta extends Model {
     private String id;
     private String name;
 
-//    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToOne
+    private Pasta pai;
+
+    @OneToMany(mappedBy = "pai", cascade = CascadeType.ALL)
     private List<Pasta> folders;
 
     @OneToMany(cascade = CascadeType.ALL)

@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
