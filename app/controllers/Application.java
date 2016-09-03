@@ -114,11 +114,6 @@ public class Application extends Controller {
         arq.update();
         Logger.info("Pasta: " + arq.toString());
 
-//        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
-//        int index = pasta.getFiles().indexOf(arq);
-//        pasta.getFiles().get(index).setContent(arquivo.getContent());
-//        pasta.getFiles().get(index).setName(arquivo.getName());
-//        pasta.update();
         return redirect(routes.Application.arquivo(id));
 
     }
@@ -133,7 +128,6 @@ public class Application extends Controller {
     public static Result pasta(String id) {
 
         if (id == null || id.equals(session("root"))) {
-            Logger.info("Redirecionando diretorio: ");
             return redirect(routes.Application.diretorio());
         } else {
             Pasta pastas = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
