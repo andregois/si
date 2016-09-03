@@ -45,9 +45,6 @@ public class Application extends Controller {
     public static Result login() {
         Form<Usuario> form = Form.form(Usuario.class).bindFromRequest();
 
-//        if (form.hasErrors()) {
-//            return badRequest(cadastro.render(form));
-//        }
         Usuario usuario = form.get();
         Logger.info("Logando usuario: " + usuario.toString());
         Usuario user = Ebean.createQuery(Usuario.class).
@@ -75,13 +72,10 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result diretorio() {
-        Logger.info("Acessando Diretorio");
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
-        Logger.info("User" + user.toString());
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
-        Logger.info("arquivos: " + raiz.getFiles().toString());
-        Logger.info("pastas: " + raiz.getFolders().toString());
-        return ok(diretorio.render(raiz.getFiles(), raiz.getFolders()));
+
+        return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe()));
     }
 
     @Security.Authenticated(Secured.class)
@@ -99,7 +93,7 @@ public class Application extends Controller {
         pasta.getFiles().add(arquivo);
         Logger.info("Pasta: " + pasta.toString());
         pasta.update();
-        arquivo.save();
+//        arquivo.save();
         return redirect(routes.Application.pasta(id));
 
     }
@@ -148,88 +142,25 @@ public class Application extends Controller {
 //        return redirect(routes.Application.diretorio());
     }
 
-
-/*
-
-    @Security.Authenticated(Secured.class)
-    public static Result formularioNovaPasta() {
-        Form<Pasta> form = form(Pasta.class);
-        return ok(criarPasta.render(form));
-    }
-
-
-
-    @Security.Authenticated(Secured.class)
-    public static Result novoArquivo() {
-//        Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
-//
-//        Arquivo arquivo = form.get();
-//        Compartilhado comp = new Compartilhado();
-//        comp.setId(arquivo.getId());
-//        comp.setUser(arquivo.getDono());
-//        arquivo.compartilhar(comp);
-//        Logger.info("Criando donos" + arquivo.getCompartilhado().toString());
-//        comp.save();
-//        arquivo.save();
-//        Logger.info("Salvou" + arquivo.toString());
-//        if (arquivo.getPastaId().equals("main")) {
-//            return redirect(routes.Application.diretorio());
-//        } else {
-        return redirect(routes.Application.pasta(arquivo.getPastaId()));
-//        }
-    }
-
-    private static Usuario getUsuarioPorUsername(String username) {
-//        List<Usuario> listaUsuario = Ebean.createQuery(Usuario.class).findList();
-//        for (Usuario u : listaUsuario) {
-//            if (u.getUsername().equals(username)) {
-//                return u;
-//            }
-//        }
-        return null;
-    }
-
-
-
-
     @Security.Authenticated(Secured.class)
     public static Result formularioCompartilhar(String id) {
-//        Form<Compartilhado> form = form(Compartilhado.class);
+        Form<Usuario> form = form(Usuario.class);
         return ok(compartilharArquivo.render(form, id));
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result compartilhar() {
-//        Form<Compartilhado> form = form(Compartilhado.class).bindFromRequest();
-//        Compartilhado comp = form.get();
-//        Arquivo arq = getArquivoPorId(comp.getId());
-//        Usuario usr = getUsuarioPorUsername(comp.getUser());
-//        if(usr != null) {
-//            arq.compartilhar(comp);
-//        }
-//        comp.save();
-//        arq.save();
-        return redirect(routes.Application.diretorio());
+    public static Result compartilhar(String id) {
+        Form<Usuario> form = form(Usuario.class).bindFromRequest();
+        Usuario usuario = form.get();
+        Logger.info("Compartilhando: " + usuario.toString());
+        Usuario user = Ebean.createQuery(Usuario.class).where().eq("username", usuario.getUsername()).findUnique();
+        if (user != null) {
+            Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+            arq.getSharedWith().add(user);
+            arq.update();
+        }
+        return redirect(routes.Application.arquivo(id));
     }
 
-
-//
-//        if (form.hasErrors()) {
-//            return badRequest(cadastro.render(form));
-//        }
-//        Usuario a = form.get();
-//        Usuario b = Ebean.createQuery(Usuario.class).where().eq("username", a.getUsername()).findUnique();
-//
-//        if (b != null){
-//            return redirect(routes.Application.diretorio());
-//        } else {
-//            return redirect(routes.Application.index());
-//        }
-
-//        Form<Arquivo> form = Form.form(Arquivo.class);
-//        return ok(diretorio.render(form))
-
-
-*/
 
 }

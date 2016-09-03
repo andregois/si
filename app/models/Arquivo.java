@@ -54,4 +54,14 @@ public class Arquivo extends Model {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "Arquivo{" +
+                "id='" + id + '\'' +
+                ", sharedWith=" + sharedWith +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

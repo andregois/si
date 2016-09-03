@@ -3,41 +3,31 @@
 @main("Arquivo") {
     <h2>@arquivo.getName</h2>
     <table>
-            <tr>
-                <td>@arquivo.getContent</td>
-            </tr>
+        <tr>
+            <td>@arquivo.getContent</td>
+        </tr>
     </table>
 
-    <hr>
-
-
-@*//    @if(arquivo.getPastaId.equals("main")){*@
-
-        @helper.form(action = routes.Application.diretorio()) {
-            <div class="form-group">
-                <div class="d-inline bg-success">
-                    <button id="back" name="back" class="btn btn-default">Voltar</button>
+    <table>
+        <tr>
+            <th>
+            @helper.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_folder" name="new_folder" class="btn btn-default">Compartilhar Arquivo</button>
+                    </div>
                 </div>
-            </div>
-@*//        }*@
-
-@*//    } else {*@
-
-@*//        @helper.form(action = routes.Application.pasta(arquivo.getPastaId)) {*@
-            @*<div class="form-group">*@
-                @*<div class="d-inline bg-success">*@
-                    @*<button id="back" name="back" class="btn btn-default">Voltar</button>*@
-                @*</div>*@
-            @*</div>*@
-@*//        }*@
-
-
-    }
-@*//    @helper.form(action = routes.Application.formularioCompartilhar(arquivo.getId)) {*@
-        @*<div class="form-group">*@
-            @*<div class="d-inline bg-success">*@
-                @*<button id="compartilhar" name="compartilhar" class="btn btn-default">Compartilhado</button>*@
-            @*</div>*@
-        @*</div>*@
-    @*}*@
+            }
+            </th>
+            <th>
+            @helper.form(action = routes.Application.diretorio()) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="back" name="back" class="btn btn-default">Voltar</button>
+                    </div>
+                </div>
+            }
+            </th>
+        </tr>
+    </table>
 }

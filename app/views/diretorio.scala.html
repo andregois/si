@@ -1,27 +1,13 @@
-@(arquivos: List[Arquivo], pastas: List[Pasta])
+@(arquivos: List[Arquivo], pastas: List[Pasta], compartilhados: List[Arquivo])
 
 @main("Diretorio") {
     <span>@session().get("username")</span>
-    @if(arquivos.isEmpty) {
-        <h3>Não há Arquivos</h3>
-    } else {
-        <h3>Arquivos Cadastrados:</h3>
-        <table>
-            <tr>
-                <th>Nome do Arquivo</th>
-            </tr>
-            @for(arquivo <- arquivos) {
-                        <tr>
-                            <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getContent()</a></td>
-                        </tr>
-            }
-        </table>
-    }
 
     @if(pastas.isEmpty) {
         <h3>Não há Pastas</h3>
+        <hr>
     } else {
-        <h3>Pastas:</h3>
+        <h3>Minhas Pastas:</h3>
         <table>
             <tr>
                 <th>Nome da Pasta</th>
@@ -29,6 +15,40 @@
             @for(pasta <- pastas) {
                 <tr>
                     <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a></td>
+                </tr>
+            }
+        </table>
+    }
+
+    @if(arquivos.isEmpty) {
+        <h3>Não há Arquivos</h3>
+        <hr>
+    } else {
+        <h3>Meus Arquivos:</h3>
+        <table>
+            <tr>
+                <th>Nome do Arquivo</th>
+            </tr>
+            @for(arquivo <- arquivos) {
+                <tr>
+                    <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getContent()</a></td>
+                </tr>
+            }
+        </table>
+    }
+
+    @if(compartilhados.isEmpty) {
+        <h3>Não há Arquivos Compartilhados</h3>
+        <hr>
+    } else {
+        <h3>Arquivos Compartilhados Comigo:</h3>
+        <table>
+            <tr>
+                <th>Nome do Arquivo</th>
+            </tr>
+            @for(arquivo <- compartilhados) {
+                <tr>
+                    <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getContent()</a></td>
                 </tr>
             }
         </table>
@@ -58,9 +78,6 @@
             </th>
         </tr>
     </table>
-    @*<a href="@routes.Application.formularioNovoArquivo("main")">Novo Arquivo</a>*@
-    @*<h3> </h3>*@
-    @*<a href="@routes.Application.formularioNovaPasta()">Novo Pasta</a>*@
 
     @helper.form(action = routes.Application.deslogar()) {
         <div class="form-group">

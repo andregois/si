@@ -14,6 +14,9 @@ GET     /diretorio                        controllers.Application.diretorio()
 GET     /arquivo/:id/novo                   controllers.Application.formularioNovoArquivo(id: String)
 POST    /arquivo/:id/novo                   controllers.Application.novoArquivo(id: String)
 
+GET     /compartilhar/:id                   controllers.Application.formularioCompartilhar(id: String)
+POST    /compartilhar/:id                   controllers.Application.compartilhar(id: String)
+
 GET     /arquivo/:id                      controllers.Application.arquivo(id: String)
 
 GET     /pasta/:id                        controllers.Application.pasta(id: String)
