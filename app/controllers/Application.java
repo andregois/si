@@ -116,6 +116,11 @@ public class Application extends Controller {
 
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result arquivo(String id) {
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        return ok(arquivo.render(arq));
+    }
 
 /*
     @Security.Authenticated(Secured.class)
@@ -144,25 +149,6 @@ public class Application extends Controller {
         Form<Pasta> form = form(Pasta.class);
         return ok(criarPasta.render(form));
     }
-
-
-    @Security.Authenticated(Secured.class)
-    public static Result arquivo(String id) {
-        return ok(arquivo.render(getArquivoPorId(id)));
-    }
-
-
-    private static Arquivo getArquivoPorId(String id) {
-//        List<Arquivo> listaArquivos = Ebean.createQuery(Arquivo.class).findList();
-//        for (Arquivo a : listaArquivos) {
-//            if (a.getId().equals(id)) {
-//                return a;
-//            }
-//        }
-        return null;
-    }
-
-
 
 
 

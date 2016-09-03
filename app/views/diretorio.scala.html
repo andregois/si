@@ -12,9 +12,7 @@
             </tr>
             @for(arquivo <- arquivos) {
                         <tr>
-                            @*<td><a href="@routes.Application.arquivo(arquivo.getId())">*@
-                            <td>@arquivo.getContent()</td>
-                            @*</a></td>*@
+                            <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getContent()</a></td>
                         </tr>
             }
         </table>

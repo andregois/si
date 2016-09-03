@@ -16,13 +16,14 @@ POST    /pasta/:id/novo                   controllers.Application.novoArquivo(id
 
 GET     /pasta/:id                        controllers.Application.pasta(id: String)
 
+GET     /arquivo/:id                      controllers.Application.arquivo(id: String)
+
 #
 #GET     /pasta/:id/compartilhar           controllers.Application.formularioCompartilhar(id: String)
 #POST    /pasta/arquivo/compartilhar       controllers.Application.compartilhar()
 #
 #GET     /pasta/novo                       controllers.Application.formularioNovaPasta()
 #POST    /pasta/novo                       controllers.Application.novaPasta()
-#GET     /arquivo/:id                      controllers.Application.arquivo(id: String)
 
 
 
