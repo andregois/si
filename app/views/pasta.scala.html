@@ -1,6 +1,25 @@
-@(arquivos: List[Arquivo], id: String)
+@(arquivos: List[Arquivo],pastas: List[Pasta] , id: String)
 
 @main("Diretorio") {
+
+    @if(pastas.isEmpty) {
+        <h3>Não há Pastas</h3>
+        <hr>
+    } else {
+        <h3>Minhas Pastas:</h3>
+        <table>
+            <tr>
+                <th>Nome da Pasta</th>
+            </tr>
+            @for(pasta <- pastas) {
+                <tr>
+                    <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a></td>
+                </tr>
+            }
+        </table>
+    }
+
+
     @if(arquivos.isEmpty) {
         <h3>Não há Arquivos</h3>
     } else {
@@ -31,6 +50,17 @@
                 </div>
             }
             </th>
+
+            <th>
+            @helper.form(action = routes.Application.formularioNovaPasta(id)) {
+                <div class="form-group">
+                    <div class="d-inline bg-success">
+                        <button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>
+                    </div>
+                </div>
+            }
+            </th>
+
             <th>
 
             @helper.form(action = routes.Application.diretorio()) {

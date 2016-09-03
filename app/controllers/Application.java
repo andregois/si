@@ -139,7 +139,8 @@ public class Application extends Controller {
             Pasta pastas = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
             Logger.info("Pasta: " + pastas.toString());
             List<Arquivo> arquivos = pastas.getFiles();
-            return ok(pasta.render(arquivos, id));
+            List<Pasta> pastasFilha = pastas.getFolders();
+            return ok(pasta.render(arquivos, pastasFilha, id));
         }
 
     }
