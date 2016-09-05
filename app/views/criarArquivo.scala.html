@@ -1,38 +1,27 @@
 @(formArquivo: Form[Arquivo], id: String)
-@import helper._
+@extension = @{ Seq("A"->"txt","M"->"md") }
 
-@main("Criar Arquivo") {
-    @helper.form(routes.Application.novoArquivo(id)) {
+    @import b3.vertical.fieldConstructor
 
-        <form class="form-horizontal">
-            <fieldset>
-                <legend></legend>
+    @main("") {
+    <h2>Criar Arquivo</h2>
+    @b3.form(routes.Application.novoArquivo(id)) {
+        <table>
+            <th>
+                @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome", 'placeholder -> "Nome Do Arquivo.txt",'required -> "true")
+            </th>
+            <th>
+                @b3.select( formArquivo("foo"), options = extension, '_label -> "Extensão" )
+            </th>
+        </table>
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="nomeDoArquivo">Nome Do Arquivo</label>
-                    <div class="col-md-4">
-                        <input id="name_input" name="name" type="text" placeholder="" class="form-control input-md" required="">
+        @b3.textarea( formArquivo("content"), '_label -> "Conteúdo", 'rows -> 10 ,'required -> "true")
 
-                    </div>
-                </div>
+        @b3.submit('class -> "btn btn-primary") {
+            <span class="glyphicon glyphicon-ok"></span> Salvar}
 
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="conteudo">Conteudo</label>
-                    <div class="col-md-4">
-                        <textarea id="content_input" name="content" rows="5" placeholder="" class="form-control input-md" required=""></textarea>
-
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="entry_button"></label>
-                    <div class="col-md-4">
-                        <button id="entry_button" name="entry_button" class="btn btn-primary">Salvar</button>
-                    </div>
-                </div>
-
-            </fieldset>
-        </form>
+        @b3.reset('class -> "btn btn-danger") {
+            <span class="glyphicon glyphicon-remove"></span> Limpar }
 
     }
 

@@ -1,50 +1,26 @@
 @(formCupom: Form[Usuario])
-@import helper._
-    @import helper.twitterBootstrap._
 
-@main(">>DRIVEBOX<<") {
-    <h3>Login</h3>
-    @helper.form(action = routes.Application.login()) {
+@import b3.vertical.fieldConstructor
 
-    <form class="form-horizontal">
-        <fieldset>
-            <legend></legend>
+@main("") {
+    <h2>Login</h2>
+    @b3.form(action = routes.Application.login()) {
 
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="username">Username</label>
-                <div class="col-md-4">
-                    <input id="username" name="username" type="text" placeholder="" class="form-control input-md" required="">
+        @b3.inputType("text", formCupom("username"), 'class -> "extra_class", '_label -> "Name",'required -> "true" , 'placeholder -> "John")
 
-                </div>
-            </div>
+        @b3.inputType("password", formCupom("password"), '_label -> "Password",'required -> "true")
 
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="password">Password</label>
-                <div class="col-md-4">
-                    <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
+        @b3.submit('class -> "btn btn-primary") {
+            <span class="glyphicon glyphicon-ok"></span> Entrar}
 
-                </div>
-            </div>
+        @b3.reset('class -> "btn btn-danger") {
+            <span class="glyphicon glyphicon-remove"></span> Limpar }
 
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="entry_button"></label>
-                <div class="col-md-4">
-                    <button id="entry_button" name="entry_button" class="btn btn-primary">Login</button>
-                </div>
-            </div>
-
-        </fieldset>
-    </form>
     }
-
     @*<a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>*@
+    @b3.form(action = routes.Application.formularioNovoUsuario()) {
+        @b3.buttonType("submit", 'class -> "btn btn-default") {Criar Novo Usuário }
 
-    @helper.form(action = routes.Application.formularioNovoUsuario()) {
-        <div class="form-group">
-            <div class="d-inline bg-success">
-                <button id="new_user" name="new_user" class="btn btn-default">Novo Usuario</button>
-            </div>
-        </div>
     }
 }
 

@@ -141,9 +141,11 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result formularioNovaPasta(String id) {
+
         Form<Pasta> form = form(Pasta.class);
         return ok(criarPasta.render(form, id));
     }
+
 
     @Security.Authenticated(Secured.class)
     public static Result novaPasta(String id) {
