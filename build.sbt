@@ -1,14 +1,18 @@
-import play.Project._
+import play.Play.autoImport._
+import PlayKeys._
 
-name := "hello-play-java"
 
-version := "1.0-SNAPSHOT"
-
+val main = Project("hello-play-java", file(".")).enablePlugins(play.PlayJava).settings(
+  version := "1.0-SNAPSHOT"
+)
 
 libraryDependencies ++= Seq(
+  "com.adrianhurt" %% "play-bootstrap" % "1.0-P23-B3",
   jdbc,
   javaEbean,
-  "org.webjars" %% "webjars-play" % "2.2.2",
-  "org.webjars" % "bootstrap" % "2.3.1")
+  "org.webjars" %% "webjars-play" % "2.3.0",
+  filters,
+  "org.webjars" % "bootstrap" % "3.3.6",
+  "org.webjars" % "jquery" % "2.2.3")
 
-playJavaSettings
+//  "org.webjars" % "bootstrap" % "2.3.1",
