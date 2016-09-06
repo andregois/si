@@ -1,30 +1,17 @@
 @(formPasta: Form[Usuario], id: String)
-    @import helper._
+@import b3.vertical.fieldConstructor
 
-    @main("Compartilhar") {
-        @helper.form(routes.Application.compartilhar(id)) {
+@main("") {
+    <h2>Compartilhar</h2>
+    @b3.form(routes.Application.compartilhar(id)) {
 
-            <form class="form-horizontal">
-                <fieldset>
-                    <legend></legend>
+        @b3.inputType("text",formPasta("username"), 'class -> "extra-class", '_label -> "Compartilhar arquivo com usuario", 'placeholder -> "John" ,'required -> "true")
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="compartilhar">Comapartilhar Arquivo com Usuario</label>
-                        <div class="col-md-4">
-                            <input id="nomeDoUsuario" name="username" type="text" placeholder="" class="form-control input-md" required="">
+        @b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Salvar}
 
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="entry_button"></label>
-                        <div class="col-md-4">
-                            <button id="entry_button" name="entry_button" class="btn btn-primary">Salvar</button>
-                        </div>
-                    </div>
-
-                </fieldset>
-            </form>
-
-
-        }
     }
+    @helper.form(action = routes.Application.diretorio()) {
+        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Voltar }
+
+    }
+}
