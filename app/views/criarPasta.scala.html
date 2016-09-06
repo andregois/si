@@ -1,30 +1,19 @@
 @(formPasta: Form[Pasta], id: String)
-    @import helper._
+@import b3.vertical.fieldConstructor
 
-    @main("Criar Pasta") {
-        @helper.form(routes.Application.novaPasta(id)) {
+@main("") {
+    <h2>Criar Pasta</h2>
+    @b3.form(routes.Application.novaPasta(id)) {
 
-            <form class="form-horizontal">
-                <fieldset>
-                    <legend></legend>
+        @b3.inputType( "text", formPasta("name"), 'class -> "extra_class", '_label -> "Nome", 'placeholder -> "Nome da pasta" ,'required -> "true")
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="nomeDaPasta">Nome Da Pasta</label>
-                        <div class="col-md-4">
-                            <input id="nomeDaPasta" name="name" type="text" placeholder="" class="form-control input-md" required="">
-
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="entry_button"></label>
-                        <div class="col-md-4">
-                            <button id="entry_button" name="entry_button" class="btn btn-primary">Salvar</button>
-                        </div>
-                    </div>
-
-                </fieldset>
-            </form>
+        @b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Salvar}
 
 
-        }
     }
+
+    @helper.form(action = routes.Application.diretorio()) {
+        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Voltar }
+
+    }
+}
