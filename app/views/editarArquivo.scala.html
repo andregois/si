@@ -5,9 +5,9 @@
     <h2>Editar Arquivo</h2>
     @b3.form(routes.Application.editarArquivo(id)) {
 
-        @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome do arquivo", 'value -> "@arquivo.getName", 'placeholder -> "", 'required -> "true")
+        @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome do arquivo", 'value -> arquivo.getName, 'placeholder -> "", 'required -> "true")
 
-        @b3.textarea(formArquivo("content"), '_label -> "", 'value -> "@arquivo.getContent", 'rows -> 5, 'required -> "true")
+        @b3.textarea(formArquivo("content"), '_label -> "", 'value -> arquivo.getContent, 'rows -> 5, 'required -> "true")
 
         @b3.submit('class -> "btn btn-primary") {
             <span class="glyphicon glyphicon-ok"></span> Salvar}
