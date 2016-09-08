@@ -1,6 +1,8 @@
 @(arquivos: List[Arquivo], pastas: List[Pasta], compartilhados: List[Arquivo])
+@import b3.vertical.fieldConstructor
 
 @main("Diretorio") {
+
     <span>@session().get("username")</span>
 
     @if(pastas.isEmpty) {
@@ -8,16 +10,9 @@
         <hr>
     } else {
         <h3>Minhas Pastas:</h3>
-        <table>
-            <tr>
-                <th>Nome da Pasta</th>
-            </tr>
             @for(pasta <- pastas) {
-                <tr>
-                    <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a></td>
-                </tr>
+                @b3.static(){<a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>}
             }
-        </table>
     }
 
     @if(arquivos.isEmpty) {
@@ -25,16 +20,9 @@
         <hr>
     } else {
         <h3>Meus Arquivos:</h3>
-        <table>
-            <tr>
-                <th>Nome do Arquivo</th>
-            </tr>
             @for(arquivo <- arquivos) {
-                <tr>
-                    <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a></td>
-                </tr>
+                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
             }
-        </table>
     }
 
     @if(compartilhados.isEmpty) {
@@ -43,47 +31,29 @@
     } else {
         <h3>Arquivos Compartilhados Comigo:</h3>
         <table>
-            <tr>
-                <th>Nome do Arquivo</th>
-            </tr>
             @for(arquivo <- compartilhados) {
-                <tr>
-                    <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getContent()</a></td>
-                </tr>
+                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
             }
-        </table>
     }
     <hr>
 
     <table>
         <tr>
             <th>
-
-            @helper.form(action = routes.Application.formularioNovoArquivo(session().get("root"))) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>
-                    </div>
-                </div>
+            @b3.form(action = routes.Application.formularioNovoArquivo(session().get("root"))){
+                @b3.buttonType("new_file", 'class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Novo arquivo }
             }
             </th>
             <th>
-            @helper.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>
-                    </div>
-                </div>
+            @b3.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
+                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Nova Pasta }
             }
             </th>
         </tr>
     </table>
 
-    @helper.form(action = routes.Application.deslogar()) {
-        <div class="form-group">
-            <div class="d-inline bg-success">
-                <button id="index" name="index" class="btn btn-default">Sair</button>
-            </div>
-        </div>
+    @b3.form(action = routes.Application.deslogar()) {
+        @b3.buttonType("index", 'class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Sair }
     }
+
 }
