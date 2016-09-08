@@ -16,3 +16,4 @@ libraryDependencies ++= Seq(
   "org.webjars" % "jquery" % "2.2.3")
 
 //  "org.webjars" % "bootstrap" % "2.3.1",
+herokuAppName in Compile := "drivebox-si"
