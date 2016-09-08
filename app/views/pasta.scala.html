@@ -1,7 +1,7 @@
 @(arquivos: List[Arquivo],pastas: List[Pasta] , id: String)
 @import b3.vertical.fieldConstructor
 
-@main("Diretorio") {
+@main("") {
 
     @if(pastas.isEmpty) {
         <h3>Não há Pastas</h3>
@@ -29,14 +29,14 @@
             <th>
             @b3.form(action = routes.Application.formularioNovoArquivo(id)) {
                 @b3.buttonType("new_file", 'class -> "btn btn-primary"){
-                    <span class="glyphicon glyphicon-ok"></span> Novo arquivo }
+                    <span class="glyphicon glyphicon-file"></span> Novo arquivo }
             }
             </th>
 
             <th>
             @b3.form(action = routes.Application.formularioNovaPasta(id)) {
                 @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
-                    <span class="glyphicon glyphicon-ok"></span> Nova Pasta }
+                    <span class="glyphicon glyphicon-lock"></span> Nova Pasta }
             }
             </th>
         </tr>

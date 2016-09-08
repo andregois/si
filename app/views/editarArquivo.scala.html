@@ -9,11 +9,21 @@
 
         @b3.textarea(formArquivo("content"), '_label -> "", 'value -> arquivo.getContent, 'rows -> 5, 'required -> "true")
 
-        @b3.submit('class -> "btn btn-primary") {
-            <span class="glyphicon glyphicon-ok"></span> Salvar}
-
+        <table>
+            <th>
+                @b3.form(routes.Application.editarArquivo(id)){
+                    @b3.buttonType("file", 'class -> "btn btn-primary"){
+                        <span class="glyphicon glyphicon-ok"></span> Salvar }
+                }
+            </th>
+            <th>
+                @b3.submit('class -> "btn btn-primary") {
+                    <span class="glyphicon glyphicon-ok"></span> Concluir}
+            </th>
+        </table>
     }
     @helper.form(action = routes.Application.diretorio()) {
-        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Cancelar }
+        @b3.submit('class -> "btn btn-danger"){
+            <span class="glyphicon glyphicon-remove"></span> Cancelar }
     }
 }

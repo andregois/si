@@ -41,19 +41,22 @@
         <tr>
             <th>
             @b3.form(action = routes.Application.formularioNovoArquivo(session().get("root"))){
-                @b3.buttonType("new_file", 'class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Novo arquivo }
+                @b3.buttonType("new_file", 'class -> "btn btn-primary"){
+                    <span class="glyphicon glyphicon-file"></span> Novo arquivo }
             }
             </th>
             <th>
             @b3.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
-                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Nova Pasta }
+                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                    <span class="glyphicon glyphicon-lock"></span> Nova Pasta }
             }
             </th>
         </tr>
     </table>
 
     @b3.form(action = routes.Application.deslogar()) {
-        @b3.buttonType("index", 'class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Sair }
+        @b3.buttonType("index", 'class -> "btn btn-danger"){
+            <span class="glyphicon glyphicon-remove"></span> Sair }
     }
 
 }
