@@ -1,4 +1,5 @@
 @(arquivos: List[Arquivo],pastas: List[Pasta] , id: String)
+@import b3.vertical.fieldConstructor
 
 @main("Diretorio") {
 
@@ -7,33 +8,18 @@
         <hr>
     } else {
         <h3>Minhas Pastas:</h3>
-        <table>
-            <tr>
-                <th>Nome da Pasta</th>
-            </tr>
-            @for(pasta <- pastas) {
-                <tr>
-                    <td><a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a></td>
-                </tr>
-            }
-        </table>
+        @for(pasta <- pastas) {
+            @b3.static(){<a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>)}
+        }
     }
-
 
     @if(arquivos.isEmpty) {
         <h3>Não há Arquivos</h3>
     } else {
         <h3>Arquivos Cadastrados:</h3>
-        <table>
-            <tr>
-                <th>Nome do Arquivo</th>
-            </tr>
-            @for(arquivo <- arquivos) {
-                <tr>
-                    <td><a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getContent()</a></td>
-                </tr>
-            }
-        </table>
+        @for(arquivo <- arquivos) {
+            @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
+        }
     }
 
     <hr>
@@ -41,39 +27,23 @@
     <table>
         <tr>
             <th>
-
-            @helper.form(action = routes.Application.formularioNovoArquivo(id)) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="new_file" name="new_file" class="btn btn-default">Novo Arquivo</button>
-                    </div>
-                </div>
+            @b3.form(action = routes.Application.formularioNovoArquivo(id)) {
+                @b3.buttonType("new_file", 'class -> "btn btn-primary"){
+                    <span class="glyphicon glyphicon-ok"></span> Novo arquivo }
             }
             </th>
 
             <th>
-            @helper.form(action = routes.Application.formularioNovaPasta(id)) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="new_folder" name="new_folder" class="btn btn-default">Nova Pasta</button>
-                    </div>
-                </div>
-            }
-            </th>
-
-            <th>
-
-            @helper.form(action = routes.Application.diretorio()) {
-                <div class="form-group">
-                    <div class="d-inline bg-success">
-                        <button id="back" name="back" class="btn btn-default">Voltar</button>
-                    </div>
-                </div>
+            @b3.form(action = routes.Application.formularioNovaPasta(id)) {
+                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                    <span class="glyphicon glyphicon-ok"></span> Nova Pasta }
             }
             </th>
         </tr>
     </table>
-    @*<a href="@routes.Application.formularioNovoArquivo(id)">Novo Arquivo</a>*@
-    @*<h3> </h3>*@
-    @*<a href="@routes.Application.diretorio()">Voltar</a>*@
+
+    @helper.form(action = routes.Application.diretorio()) {
+        @b3.submit('class -> "btn btn-danger"){
+            <span class="glyphicon glyphicon-remove"></span> Cancelar }
+    }
 }

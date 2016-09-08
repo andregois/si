@@ -7,7 +7,8 @@
 
         @b3.inputType("text",formPasta("username"), 'class -> "extra-class", '_label -> "Compartilhar arquivo com usuario", 'placeholder -> "John" ,'required -> "true")
 
-        @b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Salvar}
+        @b3.submit('class -> "btn btn-primary"){
+            <span class="glyphicon glyphicon-ok"></span> Salvar}
 
     }
     @helper.form(action = routes.Application.diretorio()) {

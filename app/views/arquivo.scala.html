@@ -9,17 +9,20 @@
     <table>
         <th>
         @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
-            @b3.buttonType("new_folder", 'class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Compartilhar arquivo }
+            @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                <span class="glyphicon glyphicon-ok"></span> Compartilhar arquivo }
         }
         </th>
         <th>
         @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())){
-            @b3.buttonType("new_folder", 'class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Editar arquivo }
+            @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                <span class="glyphicon glyphicon-ok"></span> Editar arquivo }
         }
         </th>
     </table>
 
     @b3.form(action = routes.Application.diretorio()) {
-        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Voltar }
+        @b3.submit('class -> "btn btn-danger"){
+            <span class="glyphicon glyphicon-remove"></span> Cancelar }
     }
 }
