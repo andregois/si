@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.3.0",
   filters,
   "org.webjars" % "bootstrap" % "3.3.6",
+  "org.postgresql" % "postgresql" % "9.4.1210",
   "org.webjars" % "jquery" % "2.2.3")
 
 //  "org.webjars" % "bootstrap" % "2.3.1",
