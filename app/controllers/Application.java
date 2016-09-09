@@ -177,6 +177,7 @@ public class Application extends Controller {
         Usuario user = Ebean.createQuery(Usuario.class).where().eq("username", usuario.getUsername()).findUnique();
         if (user != null) {
             Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+            arq.setCompartilhado(true);
             arq.getSharedWith().add(user);
             arq.update();
         }
