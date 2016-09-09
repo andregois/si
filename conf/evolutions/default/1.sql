@@ -8,6 +8,7 @@ create table arquivo (
   pasta_id                  varchar(255) not null,
   name                      varchar(255),
   content                   varchar(255),
+  compartilhado             boolean,
   constraint pk_arquivo primary key (id))
 ;
 

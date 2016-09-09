@@ -18,6 +18,7 @@ public class Arquivo extends Model {
 
     private String name;
     private String content;
+    private boolean compartilhado;
 
     public Arquivo() {
         this.sharedWith = Lists.newArrayList();
@@ -55,6 +56,9 @@ public class Arquivo extends Model {
         this.content = content;
     }
 
+    public boolean getCompartilhado() {return compartilhado;}
+
+    public void setCompartilhado(boolean compartilhado){ this.compartilhado = compartilhado; }
     @Override
     public String toString() {
         return "Arquivo{" +
