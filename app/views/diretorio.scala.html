@@ -32,6 +32,12 @@
         <h3>Arquivos Compartilhados Comigo:</h3>
         <table>
             @for(arquivo <- compartilhados) {
+                @if(arquivo.getCompartilhado() == true){
+                    <script language="JavaScript" type="text/javascript">
+                        alert("Voce Possui um Novo Arquivo Compartilhado")
+                        </script>
+                            arquivo.setCompartilhado() = false;
+            }
                 @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
             }
     }
