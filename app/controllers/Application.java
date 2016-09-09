@@ -155,7 +155,7 @@ public class Application extends Controller {
 
         Pasta pastaPai = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
         pastaPai.getFolders().add(pasta);
-        Logger.info("PastaPai: " + pastaPai.toString());
+        Logger.info("PastaPai : " + pastaPai.toString());
         pastaPai.update();
 
         return redirect(routes.Application.pasta(id));
