@@ -9,11 +9,11 @@ val main = Project("hello-play-java", file(".")).enablePlugins(play.PlayJava).se
 libraryDependencies ++= Seq(
   "com.adrianhurt" %% "play-bootstrap" % "1.0-P23-B3",
   jdbc,
+  "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
   javaEbean,
   "org.webjars" %% "webjars-play" % "2.3.0",
   filters,
   "org.webjars" % "bootstrap" % "3.3.6",
-  "org.postgresql" % "postgresql" % "9.4.1210",
   "org.webjars" % "jquery" % "2.2.3")
 
 //  "org.webjars" % "bootstrap" % "2.3.1",
