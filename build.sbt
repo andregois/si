@@ -9,7 +9,7 @@ val main = Project("drivebox-si", file(".")).enablePlugins(play.PlayJava).settin
 libraryDependencies ++= Seq(
   "com.adrianhurt" %% "play-bootstrap" % "1.0-P23-B3",
   jdbc,
-  "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
   javaEbean,
   "org.webjars" %% "webjars-play" % "2.3.0",
   filters,
