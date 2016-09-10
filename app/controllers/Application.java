@@ -155,7 +155,7 @@ public class Application extends Controller {
 
         Pasta pastaPai = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
         pastaPai.getFolders().add(pasta);
-        Logger.info("PastaPai: " + pastaPai.toString());
+        Logger.info("PastaPai : " + pastaPai.toString());
         pastaPai.update();
 
         return redirect(routes.Application.pasta(id));
@@ -177,6 +177,7 @@ public class Application extends Controller {
         Usuario user = Ebean.createQuery(Usuario.class).where().eq("username", usuario.getUsername()).findUnique();
         if (user != null) {
             Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+            arq.setCompartilhado(true);
             arq.getSharedWith().add(user);
             arq.update();
         }

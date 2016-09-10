@@ -2,13 +2,14 @@ import play.Play.autoImport._
 import PlayKeys._
 
 
-val main = Project("hello-play-java", file(".")).enablePlugins(play.PlayJava).settings(
-  version := "1.0-SNAPSHOT"
+val main = Project("drivebox-si", file(".")).enablePlugins(play.PlayJava).settings(
+  version := "1.0"
 )
 
 libraryDependencies ++= Seq(
   "com.adrianhurt" %% "play-bootstrap" % "1.0-P23-B3",
   jdbc,
+  "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
   javaEbean,
   "org.webjars" %% "webjars-play" % "2.3.0",
   filters,
