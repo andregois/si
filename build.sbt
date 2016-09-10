@@ -2,8 +2,8 @@ import play.Play.autoImport._
 import PlayKeys._
 
 
-val main = Project("hello-play-java", file(".")).enablePlugins(play.PlayJava).settings(
-  version := "1.0-SNAPSHOT"
+val main = Project("drivebox-si", file(".")).enablePlugins(play.PlayJava).settings(
+  version := "1.0"
 )
 
 libraryDependencies ++= Seq(
