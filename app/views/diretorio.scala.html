@@ -37,6 +37,7 @@
                     <script language="JavaScript" type="text/javascript">
                         alert("Voce Possui um Novo Arquivo Compartilhado")
                         </script>
+                    @arquivo.update()
             }
                 @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
             }
