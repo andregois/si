@@ -3,66 +3,112 @@
 
 @main("") {
 
-    <h2>Bem vindo(a), @session().get("username")</h2>
+
+    <table>
+        <th>
+        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
+            <span class="glyphicon glyphicon-cloud">
+                <p class="text-info"><font face="Monotype Corsiva", size="15"><b><i>Drivebox</i></b></font></span> }
+        </th>
+        @*
+        <th>
+        <h1 style="margin-left: 1em", ><p class="text-info"><font face="Monotype Corsiva"><b>Drivebox</b></font></p></h1>
+        </th>
+        *@
+    </table>
+    <hr>
+    <table>
+        <th>
+        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
+            <span class="glyphicon glyphicon-user"></span> }
+        </th>
+        <th>
+            <h2 style="margin-left: 1em"><font face="Monotype Corsiva">@session().get("username")</font></h2>
+        </th>
+    </table>
     <hr>
 
     @if(pastas.isEmpty) {
-        <h3>Você não possue pastas.</h3>
+        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue pastas.</font></h2>
         <hr>
     } else {
-        <h3>Minhas pastas:</h3>
+        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Minhas pastas:</font></h2>
         @for(pasta <- pastas) {
             @b3.static() {
-                <a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>
+                <span>
+                    <a href="@routes.Application.pasta(pasta.getId())">
+                    @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                        <span class="glyphicon glyphicon-folder-open">
+                            <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
+                        </span> }
+                    </a>
+                </span>
             }
         }
     }
 
     @if(arquivos.isEmpty) {
-        <h3>Você não possue arquivos.</h3>
+        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue arquivos.</font></h2>
         <hr>
     } else {
-        <h3>Meus arquivos:</h3>
+        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Meus arquivos:</font></h2>
         @for(arquivo <- arquivos) {
             @b3.static() {
-                <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName().@arquivo.getExtension</a>
+                <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                    <span class="glyphicon glyphicon-file">
+                        <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
+                    </span>
+                }
+                </a>
             }
         }
     }
 
     @if(compartilhadosW.isEmpty && compartilhadosR.isEmpty) {
-        <h3>Nenhum arquivo compartilhado com você.</h3>
+        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Nenhum arquivo compartilhado com você.</font></h2>
         <hr>
     } else {
-        <h3>Arquivos compartilhados comigo:</h3>
-        <table>
-            @for(arquivo <- compartilhadosW) {
-                @if(arquivo.getCompartilhado() == true) {
-                    @arquivo.setCompartilhado(false)
-                    <script language="JavaScript" type="text/javascript">
-                            alert("Voce Possui um Novo Arquivo Compartilhado")
-                    </script>
-                    @arquivo.update()
-                }
-                @b3.static() {
-                    <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName().@arquivo.getExtension()</a>
-                }
+        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos compartilhados comigo:</font></h2>
+        @for(arquivo <- compartilhadosW) {
+            @if(arquivo.getCompartilhado() == true) {
+                @arquivo.setCompartilhado(false)
+                <script language="JavaScript" type="text/javascript">
+                        alert("Voce Possui um Novo Arquivo Compartilhado")
+                </script>
+                @arquivo.update()
             }
-
-            @for(arquivo <- compartilhadosR) {
-                @if(arquivo.getCompartilhado() == true) {
-                    @arquivo.setCompartilhado(false)
-                    <script language="JavaScript" type="text/javascript">
-                            alert("Voce Possui um Novo Arquivo Compartilhado")
-                    </script>
-                    @arquivo.update()
+            @b3.static() {
+                <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                    <span class="glyphicon glyphicon-envelope">
+                        <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension()</font></span>
+                    </span>
                 }
-                @b3.static() {
-                    <a href="@routes.Application.arquivo(arquivo.getId(), "r")">@arquivo.getName().@arquivo.getExtension()</a>
-                }
+                </a>
             }
-        </table>
         }
+
+        @for(arquivo <- compartilhadosR) {
+            @if(arquivo.getCompartilhado() == true) {
+                @arquivo.setCompartilhado(false)
+                <script language="JavaScript" type="text/javascript">
+                        alert("Voce Possui um Novo Arquivo Compartilhado")
+                </script>
+                @arquivo.update()
+            }
+            @b3.static() {
+                <a href="@routes.Application.arquivo(arquivo.getId(), "r")">
+                    @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                        <span class="glyphicon glyphicon-envelope">
+                            <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension()</font></span>
+                        </span>
+                    }
+                </a>
+            }
+        }
+    }
+
     <hr>
 
     <table>
