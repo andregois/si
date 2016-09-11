@@ -1,7 +1,9 @@
-@(arquivos: List[Arquivo],pastas: List[Pasta] , id: String)
+@(arquivos: List[Arquivo],pastas: List[Pasta] , id: String, name: String)
 @import b3.vertical.fieldConstructor
 
 @main("") {
+    <span>@name</span>
+    <hr>
 
     @if(pastas.isEmpty) {
         <h3>Não há Pastas</h3>
@@ -9,7 +11,7 @@
     } else {
         <h3>Minhas Pastas:</h3>
         @for(pasta <- pastas) {
-            @b3.static(){<a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>)}
+            @b3.static(){<a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>}
         }
     }
 
@@ -37,6 +39,13 @@
             @b3.form(action = routes.Application.formularioNovaPasta(id)) {
                 @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
                     <span class="glyphicon glyphicon-lock"></span> Nova Pasta }
+            }
+            </th>
+
+            <th>
+            @b3.form(action = routes.Application.formularioEditarPasta(id)){
+                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                    <span class="glyphicon glyphicon-pencil"></span> Editar pasta }
             }
             </th>
         </tr>

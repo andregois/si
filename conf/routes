@@ -23,8 +23,10 @@ GET     /arquivo/:id                      controllers.Application.arquivo(id: St
 
 GET     /pasta/:id                        controllers.Application.pasta(id: String)
 
-GET     /pasta/:id/novo                       controllers.Application.formularioNovaPasta(id: String)
-POST    /pasta/:id/novo                       controllers.Application.novaPasta(id: String)
+GET     /pasta/:id/novo                   controllers.Application.formularioNovaPasta(id: String)
+POST    /pasta/:id/novo                   controllers.Application.novaPasta(id: String)
+GET     /pasta/:id/editar                 controllers.Application.formularioEditarPasta(id: String)
+POST    /pasta/:id/editar                 controllers.Application.editarPasta(id: String)
 
 
 
