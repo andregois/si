@@ -127,6 +127,8 @@ public class Application extends Controller {
         }
     }
 
+
+
     @Security.Authenticated(Secured.class)
     public static Result arquivo(String id, String modo) {
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
@@ -143,7 +145,7 @@ public class Application extends Controller {
             Logger.info("Pasta: " + pastas.toString());
             List<Arquivo> arquivos = pastas.getFiles();
             List<Pasta> pastasFilha = pastas.getFolders();
-            return ok(pasta.render(arquivos, pastasFilha, id));
+            return ok(pasta.render(arquivos, pastasFilha, id, pastas.getName()));
         }
 
     }
@@ -166,6 +168,27 @@ public class Application extends Controller {
         pastaPai.getFolders().add(pasta);
         Logger.info("PastaPai : " + pastaPai.toString());
         pastaPai.update();
+
+        return redirect(routes.Application.pasta(id));
+
+    }
+
+
+    @Security.Authenticated(Secured.class)
+    public static Result formularioEditarPasta(String id) {
+        Form<Pasta> form = form(Pasta.class);
+        Pasta file = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
+        return ok(RenomearPasta.render(form, id, file));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result editarPasta(String id) {//id da pasta
+        Form<Pasta> form = form(Pasta.class).bindFromRequest();
+        Pasta file = form.get();
+        Pasta file2 = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
+        file2.setName(file.getName());
+        file2.update();
+        Logger.info("Pasta: " + file2.toString());
 
         return redirect(routes.Application.pasta(id));
 
