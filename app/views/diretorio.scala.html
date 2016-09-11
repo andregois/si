@@ -22,7 +22,7 @@
     } else {
         <h3>Meus Arquivos:</h3>
             @for(arquivo <- arquivos) {
-                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
+                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName().@arquivo.getExtension</a>}
             }
     }
 
@@ -40,7 +40,7 @@
                         </script>
                     @arquivo.update()
             }
-                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
+                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName().@arquivo.getExtension()</a>}
             }
     }
     <hr>
