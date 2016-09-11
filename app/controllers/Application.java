@@ -106,17 +106,23 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result editarArquivo(String id) {//id da pasta
+        String[] postAction = request().body().asFormUrlEncoded().get("action");
         Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
         Arquivo arquivo = form.get();
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
         arq.setName(arquivo.getName());
         arq.setContent(arquivo.getContent());
         arq.update();
-        Logger.info("Pasta: " + arq.toString());
-
-        return redirect(routes.Application.arquivo(id));
-
+        Logger.info("Arquivo concluir: " + arq.toString());
+        String action = postAction[0];
+        Logger.info("Arquivo concluir: " + action);
+        if ("salvar".equals(action)) {
+            return redirect(routes.Application.editarArquivo(id));
+        } else {
+            return redirect(routes.Application.arquivo(id));
+        }
     }
+
 
     @Security.Authenticated(Secured.class)
     public static Result arquivo(String id) {
