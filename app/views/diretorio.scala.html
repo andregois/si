@@ -1,5 +1,6 @@
 @(arquivos: List[Arquivo], pastas: List[Pasta], compartilhados: List[Arquivo])
 @import b3.vertical.fieldConstructor
+@import java.lang.String; var name="false"
 
 @main("") {
 
@@ -35,12 +36,15 @@
             @for(arquivo <- compartilhados) {
                 @if(arquivo.getCompartilhado() == true){
                     @arquivo.setCompartilhado(false)
-                    <script language="JavaScript" type="text/javascript">
-                        alert("Voce Possui um Novo Arquivo Compartilhado")
-                        </script>
+                    @{name="true"}
                     @arquivo.update()
             }
                 @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
+            }@if(name.equals("true")){
+            <script>
+                    alert("Você tem novo(s) arquivo(s) compartilhado(s)" )
+            </script>
+            @{name="false"}
             }
     }
     <hr>
