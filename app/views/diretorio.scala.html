@@ -3,7 +3,8 @@
 
 @main("") {
 
-    <span>@session().get("username")</span>
+    <h3>Bem Vindo(a), @session().get("username")</h3>
+    <hr>
 
     @if(pastas.isEmpty) {
         <h3>Não há Pastas</h3>
@@ -37,6 +38,7 @@
                     <script language="JavaScript" type="text/javascript">
                         alert("Voce Possui um Novo Arquivo Compartilhado")
                         </script>
+                    @arquivo.update()
             }
                 @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
             }
