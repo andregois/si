@@ -5,7 +5,6 @@
 @main("") {
     <h2>@arquivo.getName</h2>
     <h4>@arquivo.getContent</h4>
-    @arquivo.setCompartilhado(false)
     <table>
         <th>
         @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
