@@ -23,6 +23,7 @@ public class Arquivo extends Model {
     private String name;
     private String content;
     private boolean compartilhado;
+    private String extension;
 
     public Arquivo() {
         this.sharedWith = Lists.newArrayList();
@@ -69,6 +70,14 @@ public class Arquivo extends Model {
         this.content = content;
     }
 
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
     public boolean getCompartilhado() {return compartilhado;}
 
     public void setCompartilhado(boolean compartilhado){ this.compartilhado = compartilhado; }
@@ -76,9 +85,10 @@ public class Arquivo extends Model {
     public String toString() {
         return "Arquivo{" +
                 "id='" + id + '\'' +
-                ", sharedWith=" + sharedWith +
-                ", name='" + name + '\'' +
-                ", content='" + content + '\'' +
+                ", sharedWith = " + sharedWith +
+                ", name = '" + name + '\'' +
+                ", content = '" + content + '\'' +
+                ", extension = '" + extension + '\'' +
                 '}';
     }
 }

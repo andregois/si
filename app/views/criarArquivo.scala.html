@@ -1,5 +1,5 @@
 @(formArquivo: Form[Arquivo], id: String)
-@extension = @{ Seq("A"->"txt","M"->"md") }
+@extension = @{ Seq("txt"->"txt","md"->"md") }
 
     @import b3.vertical.fieldConstructor
 
@@ -11,7 +11,7 @@
                 @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome", 'placeholder -> "Nome Do Arquivo.txt",'required -> "true")
             </th>
             <th>
-                @b3.select( formArquivo("foo"), options = extension, '_label -> "Extensão" )
+                @b3.select( formArquivo("extension"), options = extension, '_label -> "Extensão" )
             </th>
         </table>
 

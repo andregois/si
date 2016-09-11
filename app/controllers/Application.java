@@ -112,6 +112,7 @@ public class Application extends Controller {
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
         arq.setName(arquivo.getName());
         arq.setContent(arquivo.getContent());
+        arq.setExtension(arquivo.getExtension());
         arq.update();
         Logger.info("Arquivo concluir: " + arq.toString());
         String action = postAction[0];
@@ -122,7 +123,6 @@ public class Application extends Controller {
             return redirect(routes.Application.arquivo(id));
         }
     }
-
 
     @Security.Authenticated(Secured.class)
     public static Result arquivo(String id) {

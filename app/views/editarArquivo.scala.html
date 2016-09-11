@@ -1,12 +1,22 @@
 @(formArquivo: Form[Arquivo], id: String, arquivo: Arquivo)
 @import b3.vertical.fieldConstructor
+@extension = @{ Seq("txt"->"txt","md"->"md") }
 
 @main("") {
     <h2>Editar Arquivo</h2>
     @b3.form(routes.Application.editarArquivo(id)) {
 
+        <table>
+            <th>
+                @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome do arquivo", 'value -> arquivo.getName, 'placeholder -> "", 'required -> "true")
+            </th>
+            <th>
+                @b3.select( formArquivo("extension"), options = extension, '_label -> "Extensão", '_value -> arquivo.getExtension )
+            </th>
+        </table>
+        @*
         @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome do arquivo", 'value -> arquivo.getName, 'placeholder -> "", 'required -> "true")
-
+        *@
         @b3.textarea(formArquivo("content"), '_label -> "", 'value -> arquivo.getContent, 'rows -> 5, 'required -> "true")
 
         <table>

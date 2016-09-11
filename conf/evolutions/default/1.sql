@@ -9,6 +9,7 @@ create table arquivo (
   name                      varchar(255),
   content                   varchar(255),
   compartilhado             boolean,
+  extension                 varchar(255),
   constraint pk_arquivo primary key (id))
 ;
 
