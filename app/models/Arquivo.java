@@ -16,12 +16,17 @@ public class Arquivo extends Model {
     @ManyToMany
     private List<Usuario> sharedWith;
 
+    @ManyToMany
+    private List<Usuario> sharedReadOnly;
+
+
     private String name;
     private String content;
     private boolean compartilhado;
 
     public Arquivo() {
         this.sharedWith = Lists.newArrayList();
+        this.sharedReadOnly = Lists.newArrayList();
     }
 
     public String getId() {
@@ -38,6 +43,14 @@ public class Arquivo extends Model {
 
     public void setSharedWith(List<Usuario> sharedWith) {
         this.sharedWith = sharedWith;
+    }
+
+    public List<Usuario> getSharedReadOnly() {
+        return sharedReadOnly;
+    }
+
+    public void setSharedReadOnly(List<Usuario> sharedReadOnly) {
+        this.sharedReadOnly = sharedReadOnly;
     }
 
     public String getName() {

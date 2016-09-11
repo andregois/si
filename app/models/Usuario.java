@@ -19,11 +19,15 @@ public class Usuario extends Model {
     @ManyToMany(mappedBy = "sharedWith")
     private List<Arquivo> sharedWithMe;
 
+    @ManyToMany(mappedBy = "sharedReadOnly")
+    private List<Arquivo> sharedReadOnlyWhithMe;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Pasta root;
 
     public Usuario() {
         this.sharedWithMe = Lists.newArrayList();
+        this.sharedReadOnlyWhithMe = Lists.newArrayList();
         this.root = new Pasta();
     }
 
@@ -66,6 +70,12 @@ public class Usuario extends Model {
     public void setSharedWithMe(List<Arquivo> sharedWithMe) {
         this.sharedWithMe = sharedWithMe;
     }
+
+    public List<Arquivo> getSharedReadOnlyWhithMe() {
+        return sharedReadOnlyWhithMe;
+    }
+
+    public void setSharedReadOnlyWithMe(List<Arquivo> sharedReadOnlyWithMe) { this.sharedReadOnlyWhithMe = sharedReadOnlyWithMe; }
 
     public Pasta getRoot() {
         return root;

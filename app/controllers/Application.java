@@ -178,7 +178,12 @@ public class Application extends Controller {
         if (user != null) {
             Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
             arq.setCompartilhado(true);
-            arq.getSharedWith().add(user);
+            if (usuario.getId().equals("edicao")) {
+                arq.getSharedWith().add(user);
+            }
+            if (usuario.getId().equals("leitura")) {
+                arq.getSharedReadOnly().add(user);
+            }
             arq.update();
         }
         return redirect(routes.Application.arquivo(id));
