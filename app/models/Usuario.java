@@ -8,7 +8,8 @@ import java.util.List;
 
 @Entity
 public class Usuario extends Model {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private String id;
     @Column(unique = true)
     private String email;
@@ -16,7 +17,9 @@ public class Usuario extends Model {
     private String username;
     private String password;
 
-    @ManyToMany(mappedBy = "sharedWith")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "sharedWith",
+            targetEntity = Arquivo.class)
     private List<Arquivo> sharedWithMe;
 
     @ManyToMany(mappedBy = "sharedReadOnly")
@@ -75,7 +78,9 @@ public class Usuario extends Model {
         return sharedReadOnlyWhithMe;
     }
 
-    public void setSharedReadOnlyWithMe(List<Arquivo> sharedReadOnlyWithMe) { this.sharedReadOnlyWhithMe = sharedReadOnlyWithMe; }
+    public void setSharedReadOnlyWithMe(List<Arquivo> sharedReadOnlyWithMe) {
+        this.sharedReadOnlyWhithMe = sharedReadOnlyWithMe;
+    }
 
     public Pasta getRoot() {
         return root;
@@ -94,6 +99,7 @@ public class Usuario extends Model {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", sharedWithMe=" + sharedWithMe +
+                ", sharedReadOnlyWhithMe=" + sharedReadOnlyWhithMe +
                 ", root=" + root +
                 '}';
     }

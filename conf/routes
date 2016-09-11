@@ -19,7 +19,7 @@ POST    /arquivo/:id/editar                 controllers.Application.editarArquiv
 GET     /compartilhar/:id                   controllers.Application.formularioCompartilhar(id: String)
 POST    /compartilhar/:id                   controllers.Application.compartilhar(id: String)
 
-GET     /arquivo/:id                      controllers.Application.arquivo(id: String)
+GET     /arquivo/:id                      controllers.Application.arquivo(id: String, modo: String)
 
 GET     /pasta/:id                        controllers.Application.pasta(id: String)
 

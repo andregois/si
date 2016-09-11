@@ -13,10 +13,14 @@ public class Arquivo extends Model {
     @Id @GeneratedValue
     private String id;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = Usuario.class,
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "SharedRW", joinColumns =@JoinColumn(name = "sharedrw_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "userRW_id"))
     private List<Usuario> sharedWith;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = Usuario.class,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "SharedR", joinColumns =@JoinColumn(name = "sharedr_id",referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "userR_id"))
     private List<Usuario> sharedReadOnly;
 
 
@@ -81,6 +85,7 @@ public class Arquivo extends Model {
     public boolean getCompartilhado() {return compartilhado;}
 
     public void setCompartilhado(boolean compartilhado){ this.compartilhado = compartilhado; }
+
     @Override
     public String toString() {
         return "Arquivo{" +

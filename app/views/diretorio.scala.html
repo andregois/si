@@ -1,4 +1,4 @@
-@(arquivos: List[Arquivo], pastas: List[Pasta], compartilhados: List[Arquivo])
+@(arquivos: List[Arquivo], pastas: List[Pasta], compartilhadosW: List[Arquivo], compartilhadosR: List[Arquivo])
 @import b3.vertical.fieldConstructor
 
 @main("") {
@@ -11,9 +11,11 @@
         <hr>
     } else {
         <h3>Minhas Pastas:</h3>
-            @for(pasta <- pastas) {
-                @b3.static(){<a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>}
+        @for(pasta <- pastas) {
+            @b3.static() {
+                <a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>
             }
+        }
     }
 
     @if(arquivos.isEmpty) {
@@ -21,41 +23,59 @@
         <hr>
     } else {
         <h3>Meus Arquivos:</h3>
-            @for(arquivo <- arquivos) {
-                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName().@arquivo.getExtension</a>}
+        @for(arquivo <- arquivos) {
+            @b3.static() {
+                <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName().@arquivo.getExtension</a>
             }
+        }
     }
 
-    @if(compartilhados.isEmpty) {
+    @if(compartilhadosW.isEmpty && compartilhadosR.isEmpty) {
         <h3>Não há Arquivos Compartilhados</h3>
         <hr>
     } else {
         <h3>Arquivos Compartilhados Comigo:</h3>
         <table>
-            @for(arquivo <- compartilhados) {
-                @if(arquivo.getCompartilhado() == true){
+            @for(arquivo <- compartilhadosW) {
+                @if(arquivo.getCompartilhado() == true) {
                     @arquivo.setCompartilhado(false)
                     <script language="JavaScript" type="text/javascript">
-                        alert("Voce Possui um Novo Arquivo Compartilhado")
-                        </script>
+                            alert("Voce Possui um Novo Arquivo Compartilhado")
+                    </script>
                     @arquivo.update()
+                }
+                @b3.static() {
+                    <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName().@arquivo.getExtension()</a>
+                }
             }
-                @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName().@arquivo.getExtension()</a>}
+
+            @for(arquivo <- compartilhadosR) {
+                @if(arquivo.getCompartilhado() == true) {
+                    @arquivo.setCompartilhado(false)
+                    <script language="JavaScript" type="text/javascript">
+                            alert("Voce Possui um Novo Arquivo Compartilhado")
+                    </script>
+                    @arquivo.update()
+                }
+                @b3.static() {
+                    <a href="@routes.Application.arquivo(arquivo.getId(), "r")">@arquivo.getName().@arquivo.getExtension()</a>
+                }
             }
-    }
+        </table>
+        }
     <hr>
 
     <table>
         <tr>
             <th>
-            @b3.form(action = routes.Application.formularioNovoArquivo(session().get("root"))){
-                @b3.buttonType("new_file", 'class -> "btn btn-primary"){
+            @b3.form(action = routes.Application.formularioNovoArquivo(session().get("root"))) {
+                @b3.buttonType("new_file", 'class -> "btn btn-primary") {
                     <span class="glyphicon glyphicon-file"></span> Novo arquivo }
             }
             </th>
             <th>
             @b3.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
-                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                @b3.buttonType("new_folder", 'class -> "btn btn-primary") {
                     <span class="glyphicon glyphicon-lock"></span> Nova Pasta }
             }
             </th>
@@ -63,8 +83,7 @@
     </table>
 
     @b3.form(action = routes.Application.deslogar()) {
-        @b3.buttonType("index", 'class -> "btn btn-danger"){
+        @b3.buttonType("index", 'class -> "btn btn-danger") {
             <span class="glyphicon glyphicon-remove"></span> Sair }
     }
-
 }

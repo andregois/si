@@ -18,7 +18,7 @@
     } else {
         <h3>Arquivos Cadastrados:</h3>
         @for(arquivo <- arquivos) {
-            @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
+            @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName()</a>}
         }
     }
 

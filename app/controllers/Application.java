@@ -19,6 +19,9 @@ import static play.data.Form.form;
 
 public class Application extends Controller {
 
+    private static final String MODO_R = "r";
+    private static final String MODO_W = "w";
+
     public static Result index() {
         Form<Usuario> form = form(Usuario.class);
         return ok(index.render(form));
@@ -75,7 +78,7 @@ public class Application extends Controller {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
 
-        return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe()));
+        return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
     }
 
     @Security.Authenticated(Secured.class)
@@ -120,14 +123,14 @@ public class Application extends Controller {
         if ("salvar".equals(action)) {
             return redirect(routes.Application.editarArquivo(id));
         } else {
-            return redirect(routes.Application.arquivo(id));
+            return redirect(routes.Application.arquivo(id, MODO_W));
         }
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result arquivo(String id) {
+    public static Result arquivo(String id, String modo) {
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
-        return ok(arquivo.render(arq));
+        return ok(arquivo.render(arq, modo));
     }
 
     @Security.Authenticated(Secured.class)
@@ -179,21 +182,21 @@ public class Application extends Controller {
     public static Result compartilhar(String id) {
         Form<Usuario> form = form(Usuario.class).bindFromRequest();
         Usuario usuario = form.get();
-        Logger.info("Compartilhando: " + usuario.toString());
         Usuario user = Ebean.createQuery(Usuario.class).where().eq("username", usuario.getUsername()).findUnique();
         if (user != null) {
             Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
             arq.setCompartilhado(true);
-            if (usuario.getId().equals("edicao")) {
+            if (usuario.getId().equals("w")) {
                 arq.getSharedWith().add(user);
-            }
-            if (usuario.getId().equals("leitura")) {
+                Logger.info("Tipo de compartilhamento: " + usuario.getId());
+            } else if (usuario.getId().equals("r")) {
                 arq.getSharedReadOnly().add(user);
+                Logger.info("Tipo de compartilhamento: " + usuario.getId());
             }
             arq.update();
         }
-        return redirect(routes.Application.arquivo(id));
+        Logger.info("Compartilhando: " + usuario.toString());
+        return redirect(routes.Application.arquivo(id, MODO_W));
     }
-
 
 }

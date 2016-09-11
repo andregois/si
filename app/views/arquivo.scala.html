@@ -1,28 +1,43 @@
-@(arquivo: Arquivo)
+@(arquivo: Arquivo, modo:String )
 @import b3.vertical.fieldConstructor
-
 
 @main("") {
     <h2>@arquivo.getName.@arquivo.getExtension</h2>
     <h4>@arquivo.getContent</h4>
-    <table>
-        <th>
-        @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
-            @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
-                <span class="glyphicon glyphicon-envelope"></span> Compartilhar arquivo }
-        }
-        </th>
-        <th>
-
-        @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())){
-            @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
-                <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
-        }
-        </th>
-    </table>
+    @if(modo.equals("r")) {
+        <table>
+            <th>
+                @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-primary", 'disabled -> true){
+                        <span class="glyphicon glyphicon-envelope"></span> Compartilhar arquivo }
+                }
+            </th>
+            <th>
+                @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-primary", 'disabled -> true) {
+                        <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
+                }
+            </th>
+        </table>
+    } else {
+        <table>
+            <th>
+                @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                        <span class="glyphicon glyphicon-envelope"></span> Compartilhar arquivo }
+                }
+            </th>
+            <th>
+                @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-primary") {
+                        <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
+                }
+            </th>
+        </table>
+    }
 
     @b3.form(action = routes.Application.diretorio()) {
         @b3.submit('class -> "btn btn-danger"){
-            <span class="glyphicon glyphicon-remove"></span> Cancelar }
+            <span class="glyphicon glyphicon-remove"></span> Sair }
     }
 }

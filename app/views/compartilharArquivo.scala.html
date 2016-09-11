@@ -8,8 +8,8 @@
         @b3.inputType("text",formPasta("username"), 'class -> "extra-class", '_label -> "Compartilhar arquivo com usuario", 'placeholder -> "John" ,'required -> "true")
 
         @b3.radio( formPasta("id"), '_label -> "Modo de compartilhamento:" ) { implicit extraInfo =>
-            @b3.radioOption("leitura", Html("Leitura <i class=\"fa fa-beer\"></i>"), 'value -> "r")
-            @b3.radioOption("edicao", Html("Edição <i class=\"fa fa-coffee\"></i>"), 'value -> "w")
+            @b3.radioOption("r", Html("Leitura <i class=\"fa fa-envelope\"></i>"), 'value -> "r")
+            @b3.radioOption("w", Html("Edição <i class=\"fa fa-pensil\"></i>"), 'value -> "w")
         }
 
         @b3.submit('class -> "btn btn-primary"){
