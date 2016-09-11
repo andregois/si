@@ -11,7 +11,7 @@
         @b3.inputType("password", formCupom("password"), '_label -> "Password",'required -> "true")
 
         @b3.submit('class -> "btn btn-primary") {
-            <span class="glyphicon glyphicon-ok"></span> Entrar}
+            <span class="glyphicon glyphicon-ok"></span> Fazer login}
 
         @b3.reset('class -> "btn btn-danger") {
             <span class="glyphicon glyphicon-remove"></span> Limpar }
@@ -19,8 +19,8 @@
     }
     @*<a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>*@
     @b3.form(action = routes.Application.formularioNovoUsuario()) {
-        @b3.buttonType("submit", 'class -> "btn btn-default") {Criar Novo Usuário }
-
+        @b3.buttonType("submit", 'class -> "btn btn-success") {
+            <span class="glyphicon glyphicon-user"></span> Criar Novo Usuário }
     }
 }
 

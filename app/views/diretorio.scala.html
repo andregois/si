@@ -3,14 +3,14 @@
 
 @main("") {
 
-    <h3>Bem Vindo(a), @session().get("username")</h3>
+    <h2>Bem vindo(a), @session().get("username")</h2>
     <hr>
 
     @if(pastas.isEmpty) {
-        <h3>Não há Pastas</h3>
+        <h3>Você não possue pastas.</h3>
         <hr>
     } else {
-        <h3>Minhas Pastas:</h3>
+        <h3>Minhas pastas:</h3>
         @for(pasta <- pastas) {
             @b3.static() {
                 <a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>
@@ -19,10 +19,10 @@
     }
 
     @if(arquivos.isEmpty) {
-        <h3>Não há Arquivos</h3>
+        <h3>Você não possue arquivos.</h3>
         <hr>
     } else {
-        <h3>Meus Arquivos:</h3>
+        <h3>Meus arquivos:</h3>
         @for(arquivo <- arquivos) {
             @b3.static() {
                 <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName().@arquivo.getExtension</a>
@@ -31,10 +31,10 @@
     }
 
     @if(compartilhadosW.isEmpty && compartilhadosR.isEmpty) {
-        <h3>Não há Arquivos Compartilhados</h3>
+        <h3>Nenhum arquivo compartilhado com você.</h3>
         <hr>
     } else {
-        <h3>Arquivos Compartilhados Comigo:</h3>
+        <h3>Arquivos compartilhados comigo:</h3>
         <table>
             @for(arquivo <- compartilhadosW) {
                 @if(arquivo.getCompartilhado() == true) {
@@ -76,7 +76,7 @@
             <th>
             @b3.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
                 @b3.buttonType("new_folder", 'class -> "btn btn-primary") {
-                    <span class="glyphicon glyphicon-lock"></span> Nova Pasta }
+                    <span class="glyphicon glyphicon-folder-open"></span> Nova Pasta }
             }
             </th>
         </tr>
