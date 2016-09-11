@@ -3,7 +3,8 @@
 
 @main("Diretorio") {
 
-    <span>@session().get("username")</span>
+    <h3>Bem Vindo(a), @session().get("username")</h3>
+    <hr>
 
     @if(pastas.isEmpty) {
         <h3>Não há Pastas</h3>
