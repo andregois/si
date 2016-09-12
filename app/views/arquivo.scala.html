@@ -2,19 +2,26 @@
 @import b3.vertical.fieldConstructor
 
 @main("") {
-    <h2>@arquivo.getName.@arquivo.getExtension</h2>
-    <h4>@arquivo.getContent</h4>
+
+    <h1><p class="text-info"><font face="Monotype Corsiva">@arquivo.getName.@arquivo.getExtension</font></p></h1>
+    <table class="table table-bordered">
+        <th>
+            <h3><font face="Monotype Corsiva">@arquivo.getContent</font></h3>
+        </th>
+    </table>
+    <hr>
+
     @if(modo.equals("r")) {
         <table>
             <th>
                 @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
-                    @b3.buttonType("new_folder", 'class -> "btn btn-primary", 'disabled -> true){
+                    @b3.buttonType("new_folder", 'class -> "btn btn-info", 'disabled -> true){
                         <span class="glyphicon glyphicon-envelope"></span> Compartilhar arquivo }
                 }
             </th>
             <th>
                 @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())) {
-                    @b3.buttonType("new_folder", 'class -> "btn btn-primary", 'disabled -> true) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-info", 'disabled -> true) {
                         <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
                 }
             </th>
@@ -23,13 +30,13 @@
         <table>
             <th>
                 @b3.form(action = routes.Application.formularioCompartilhar(arquivo.getId())) {
-                    @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
+                    @b3.buttonType("new_folder", 'class -> "btn btn-info"){
                         <span class="glyphicon glyphicon-envelope"></span> Compartilhar arquivo }
                 }
             </th>
             <th>
                 @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())) {
-                    @b3.buttonType("new_folder", 'class -> "btn btn-primary") {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-info") {
                         <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
                 }
             </th>

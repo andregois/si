@@ -3,24 +3,42 @@
 @import b3.vertical.fieldConstructor
 
 @main("") {
-    <h2>Login</h2>
-    @b3.form(action = routes.Application.login()) {
 
-        @b3.inputType("text", formCupom("username"), 'class -> "extra_class", '_label -> "Name",'required -> "true" , 'placeholder -> "John")
+    <table align="center">
+        <th>
+        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
+            <span class="glyphicon glyphicon-cloud">
+                <p class="text-info"><font face="Monotype Corsiva", size="15"><b><i>Drivebox</i></b></font></span> }
+        </th>
+    </table>
 
-        @b3.inputType("password", formCupom("password"), '_label -> "Password",'required -> "true")
+    <table class="table table-bordered">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <h1><font face="Monotype Corsiva">Login</font></h1>
+            @b3.form(action = routes.Application.login()) {
 
-        @b3.submit('class -> "btn btn-primary") {
-            <span class="glyphicon glyphicon-ok"></span> Fazer login}
+                @b3.inputType("text", formCupom("username"), 'class -> "extra_class", '_label -> "Name",'required -> "true" , 'placeholder -> "John")
 
-        @b3.reset('class -> "btn btn-danger") {
-            <span class="glyphicon glyphicon-remove"></span> Limpar }
+                @b3.inputType("password", formCupom("password"), '_label -> "Password",'required -> "true")
 
-    }
-    @*<a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>*@
-    @b3.form(action = routes.Application.formularioNovoUsuario()) {
-        @b3.buttonType("submit", 'class -> "btn btn-success") {
-            <span class="glyphicon glyphicon-user"></span> Criar Novo Usuário }
-    }
+                @b3.submit('class -> "btn btn-info") {
+                    <span class="glyphicon glyphicon-ok"></span> Fazer login}
+
+                @b3.reset('class -> "btn btn-danger") {
+                    <span class="glyphicon glyphicon-remove"></span> Limpar }
+
+            }
+            @*<a href="@routes.Application.formularioNovoUsuario">Novo Usuario</a>*@
+            @b3.form(action = routes.Application.formularioNovoUsuario()) {
+                @b3.buttonType("submit", 'class -> "btn btn-success") {
+                    <span class="glyphicon glyphicon-user"></span> Criar Novo Usuário }
+            }
+        </div>
+        <div class="col-md-2">
+        </div>
+    </table>
+
 }
 

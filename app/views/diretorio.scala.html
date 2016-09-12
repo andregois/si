@@ -4,138 +4,155 @@
 
 @main("") {
 
-    <table>
+    <table align="center">
         <th>
-        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
+            <span><p class="text-info", align="center"><font face="Monotype Corsiva", size="4">Bem vindo(a) ao</p></font></span>
+
+            @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
             <span class="glyphicon glyphicon-cloud">
                 <p class="text-info"><font face="Monotype Corsiva", size="15"><b><i>Drivebox</i></b></font></span> }
         </th>
     </table>
+
     <hr>
+    <hr>
+
     <table>
         <th>
-        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
-            <span class="glyphicon glyphicon-user"></span> }
-        </th>
-        <th>
-            <h2 style="margin-left: 1em"><font face="Monotype Corsiva">@session().get("username")</font></h2>
-        </th>
-    </table>
-    <hr>
-
-    @if(pastas.isEmpty) {
-        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue pastas.</font></h2>
-        <hr>
-    } else {
-        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Minhas pastas:</font></h2>
-        @for(pasta <- pastas) {
-            @b3.static() {
-                <span>
-                    <a href="@routes.Application.pasta(pasta.getId())">
-                    @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
-                        <span class="glyphicon glyphicon-folder-open">
-                            <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
-                        </span> }
-                    </a>
+            @b3.buttonType("new_btn", 'class -> "btn btn-success") {
+                <span class="glyphicon glyphicon-user">
+                    <span style="margin-left: 1em">
+                        <font face="Monotype Corsiva", size="5">@session().get("username")</font>
+                    </span>
                 </span>
             }
-        }
-    }
+        </th>
+    </table>
 
-    @if(arquivos.isEmpty) {
-        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue arquivos.</font></h2>
-        <hr>
-    } else {
-        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Meus arquivos:</font></h2>
-        @for(arquivo <- arquivos) {
-            @b3.static() {
-                <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
-                @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
-                    <span class="glyphicon glyphicon-file">
-                        <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
-                    </span>
-                }
-                </a>
-            }
-        }
-    }
+    <hr>
+    <hr>
 
-    @if(compartilhadosW.isEmpty && compartilhadosR.isEmpty) {
-        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Nenhum arquivo compartilhado com você.</font></h2>
-        <hr>
-    } else {
-        <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos compartilhados comigo:</font></h2>
-        @for(arquivo <- compartilhadosW) {
-            @if(arquivo.getCompartilhado() == true) {
-                @arquivo.setCompartilhado(false)
-                @{
-                    name = "true"
+    <table class="table table-bordered">
+        <div class="col-md-4">
+            @if(pastas.isEmpty) {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue pastas.</font></h2>
+                <hr>
+            } else {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Minhas pastas:</font></h2>
+                @for(pasta <- pastas) {
+                    @b3.static() {
+                        <span>
+                            <a href="@routes.Application.pasta(pasta.getId())">
+                            @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                                <span class="glyphicon glyphicon-folder-open">
+                                    <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
+                                </span> }
+                            </a>
+                        </span>
+                    }
                 }
-                @arquivo.update()
             }
-            @b3.static() {
-                <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
-                @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
-                    <span class="glyphicon glyphicon-envelope">
-                        <span style="margin-left: 1em"><font size="3">@arquivo.getName().
-                            @arquivo.getExtension()</font></span>
-                    </span>
+        </div>
+        <div class="col-md-4">
+            @if(arquivos.isEmpty) {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue arquivos.</font></h2>
+                <hr>
+            } else {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Meus arquivos:</font></h2>
+                @for(arquivo <- arquivos) {
+                    @b3.static() {
+                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                            <span class="glyphicon glyphicon-file">
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
+                            </span>
+                        }
+                        </a>
+                    }
                 }
-                </a>
             }
-        }
+        </div>
+        <div class="col-md-4">
+            @if(compartilhadosW.isEmpty && compartilhadosR.isEmpty) {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Nenhum arquivo compartilhado com você.</font></h2>
+                <hr>
+            } else {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos compartilhados comigo:</font></h2>
+                @for(arquivo <- compartilhadosW) {
+                    @if(arquivo.getCompartilhado() == true) {
+                        @arquivo.setCompartilhado(false)
+                        @{
+                            name = "true"
+                        }
+                        @arquivo.update()
+                    }
+                    @b3.static() {
+                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                            <span class="glyphicon glyphicon-envelope">
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension()</font></span>
+                            </span>
+                        }
+                        </a>
+                    }
+                }
 
-        @for(arquivo <- compartilhadosR) {
-            @if(arquivo.getCompartilhado() == true) {
-                @arquivo.setCompartilhado(false)
-                @{
-                    name = "true"
+                @for(arquivo <- compartilhadosR) {
+                    @if(arquivo.getCompartilhado() == true) {
+                        @arquivo.setCompartilhado(false)
+                        @{
+                            name = "true"
+                        }
+                        @arquivo.update()
+                    }
+                    @b3.static() {
+                        <a href="@routes.Application.arquivo(arquivo.getId(), "r")">
+                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                            <span class="glyphicon glyphicon-file">
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension()</font></span>
+                            </span>
+                        }
+                        </a>
+                    }
                 }
-                @arquivo.update()
-            }
-            @b3.static() {
-                <a href="@routes.Application.arquivo(arquivo.getId(), "r")">
-                @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
-                    <span class="glyphicon glyphicon-envelope">
-                        <span style="margin-left: 1em"><font size="3">@arquivo.getName().
-                            @arquivo.getExtension()</font></span>
-                    </span>
+
+                @if(name.equals("true")) {
+                    <script>
+                            alert("Você tem novo(s) arquivo(s) compartilhado(s)")
+                    </script>
+                    @{
+                        name = "false"
+                    }
                 }
-                </a>
             }
-        }
+        </div>
+    </table>
 
-        @if(name.equals("true")) {
-            <script>
-                    alert("Você tem novo(s) arquivo(s) compartilhado(s)")
-            </script>
-            @{
-                name = "false"
-            }
-        }
-    }
-
+    <hr>
     <hr>
 
     <table>
         <tr>
             <th>
             @b3.form(action = routes.Application.formularioNovoArquivo(session().get("root"))) {
-                @b3.buttonType("new_file", 'class -> "btn btn-primary") {
+                @b3.buttonType("new_file", 'class -> "btn btn-info") {
                     <span class="glyphicon glyphicon-file"></span> Novo arquivo }
             }
             </th>
             <th>
             @b3.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
-                @b3.buttonType("new_folder", 'class -> "btn btn-primary") {
+                @b3.buttonType("new_folder", 'class -> "btn btn-info") {
                     <span class="glyphicon glyphicon-folder-open"></span> Nova Pasta }
             }
             </th>
         </tr>
     </table>
 
+    <hr>
+
     @b3.form(action = routes.Application.deslogar()) {
         @b3.buttonType("index", 'class -> "btn btn-danger") {
             <span class="glyphicon glyphicon-remove"></span> Sair }
     }
+
 }

@@ -3,7 +3,7 @@
 @extension = @{ Seq("txt"->"txt","md"->"md") }
 
 @main("") {
-    <h2>Editar Arquivo</h2>
+    <h1><font face="Monotype Corsiva">Editar Arquivo</font></h1>
     @b3.form(routes.Application.editarArquivo(id)) {
 
         <table>
@@ -19,12 +19,12 @@
 
         <table>
             <th>
-                @b3.buttonType("file", 'class -> "btn btn-primary", 'name -> "action", 'value -> "salvar"){
+                @b3.buttonType("file", 'class -> "btn btn-info", 'name -> "action", 'value -> "salvar"){
                     <span class="glyphicon glyphicon-floppy-saved"></span> Salvar }
 
             </th>
             <th>
-                @b3.buttonType("file", 'class -> "btn btn-primary", 'name -> "action", 'value -> "concluir"){
+                @b3.buttonType("file", 'class -> "btn btn-info", 'name -> "action", 'value -> "concluir"){
                     <span class="glyphicon glyphicon-check"></span> Concluir }
             </th>
         </table>
