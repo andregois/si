@@ -34,7 +34,6 @@ public class Application extends Controller {
             return badRequest(cadastro.render(form));
         }
         Usuario usuario = form.get();
-        Logger.info("Novo Usuario Cadastrado: " + usuario.toString());
         usuario.save();
         return redirect(routes.Application.index());
     }
@@ -49,7 +48,6 @@ public class Application extends Controller {
         Form<Usuario> form = Form.form(Usuario.class).bindFromRequest();
 
         Usuario usuario = form.get();
-        Logger.info("Logando usuario: " + usuario.toString());
         Usuario user = Ebean.createQuery(Usuario.class).
                 where().
                 and(eq("username", usuario.getUsername()), eq("password", usuario.getPassword())).findUnique();
@@ -57,11 +55,9 @@ public class Application extends Controller {
         if (user == null) {
             return redirect(routes.Application.index());
         } else {
-            Logger.info("Usuario Logado : " + usuario.toString());
             session("username", user.getUsername());
             session("id", user.getId());
             session("root", user.getRoot().getId());
-            Logger.info("Usuario Logado 2 : " + user.toString());
             return redirect(routes.Application.diretorio());
         }
 
@@ -94,7 +90,6 @@ public class Application extends Controller {
 
         Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
         pasta.getFiles().add(arquivo);
-        Logger.info("Pasta: " + pasta.toString());
         pasta.update();
         return redirect(routes.Application.pasta(id));
 
@@ -117,9 +112,7 @@ public class Application extends Controller {
         arq.setContent(arquivo.getContent());
         arq.setExtension(arquivo.getExtension());
         arq.update();
-        Logger.info("Arquivo concluir: " + arq.toString());
         String action = postAction[0];
-        Logger.info("Arquivo concluir: " + action);
         if ("salvar".equals(action)) {
             return redirect(routes.Application.editarArquivo(id));
         } else {
@@ -142,7 +135,6 @@ public class Application extends Controller {
             return redirect(routes.Application.diretorio());
         } else {
             Pasta pastas = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
-            Logger.info("Pasta: " + pastas.toString());
             List<Arquivo> arquivos = pastas.getFiles();
             List<Pasta> pastasFilha = pastas.getFolders();
             return ok(pasta.render(arquivos, pastasFilha, id, pastas.getName()));
@@ -166,7 +158,6 @@ public class Application extends Controller {
 
         Pasta pastaPai = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
         pastaPai.getFolders().add(pasta);
-        Logger.info("PastaPai : " + pastaPai.toString());
         pastaPai.update();
 
         return redirect(routes.Application.pasta(id));
@@ -188,7 +179,6 @@ public class Application extends Controller {
         Pasta file2 = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
         file2.setName(file.getName());
         file2.update();
-        Logger.info("Pasta: " + file2.toString());
 
         return redirect(routes.Application.pasta(id));
 
@@ -211,14 +201,11 @@ public class Application extends Controller {
             arq.setCompartilhado(true);
             if (usuario.getId().equals("w")) {
                 arq.getSharedWith().add(user);
-                Logger.info("Tipo de compartilhamento: " + usuario.getId());
             } else if (usuario.getId().equals("r")) {
                 arq.getSharedReadOnly().add(user);
-                Logger.info("Tipo de compartilhamento: " + usuario.getId());
             }
             arq.update();
         }
-        Logger.info("Compartilhando: " + usuario.toString());
         return redirect(routes.Application.arquivo(id, MODO_W));
     }
 
