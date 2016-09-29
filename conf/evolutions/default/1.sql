@@ -25,6 +25,7 @@ create table usuario (
   email                     varchar(255),
   username                  varchar(255),
   password                  varchar(255),
+  auth_token                varchar(255),
   root_id                   varchar(255),
   constraint uq_usuario_email unique (email),
   constraint uq_usuario_username unique (username),

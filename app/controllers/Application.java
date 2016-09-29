@@ -43,7 +43,7 @@ public class Application extends Controller {
         return ok(cadastro.render(form));
     }
 
-
+    //@Security.Authenticated(ActionAuthenticator.class)
     public static Result login() {
         Form<Usuario> form = Form.form(Usuario.class).bindFromRequest();
 
@@ -72,6 +72,7 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result diretorio() {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        user.getUsername();
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
 
         return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
