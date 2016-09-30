@@ -10,9 +10,6 @@ POST    /login                            controllers.Application.login()
 POST   /deslogar                          controllers.Application.deslogar()
 
 GET     /diretorio                        controllers.Application.diretorio()
-GET     /arquivo/comprimir                controllers.Application.formularioComprimirArquivos()
-GET    /arquivo/comprimirZIP               controllers.Application.comprimirArquivosZIP()
-GET    /arquivo/comprimirGZIP               controllers.Application.comprimirArquivosGZIP()
 
 
 GET     /arquivo/:id/novo                   controllers.Application.formularioNovoArquivo(id: String)
