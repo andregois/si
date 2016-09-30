@@ -11,12 +11,13 @@ public class ActionAuthenticator extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context ctx) {
         String token = getTokenFromHeader(ctx);
-        if (token != null) {
-            Usuario user = Usuario.find.where().eq("authToken", token).findUnique();
-            if (user != null) {
-                return user.username;
-            }
-        }
+//        if (token != null) {
+//            Usuario user = Usuario.find.where().eq("authToken", token).findUnique();
+//            if (user != null) {
+//                return user.username;
+//            }
+//        }
+        //TODO
         return null;
     }
 

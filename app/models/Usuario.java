@@ -5,7 +5,6 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Random;
 
 @Entity
 public class Usuario extends Model {
@@ -17,9 +16,9 @@ public class Usuario extends Model {
     @Column(unique = true)
     public String username;
     private String password;
-    private String authToken;
+//    private String authToken;
 
-    public static Finder<Integer,Usuario> find = new Finder(Integer.class, Usuario.class);
+//    public static Finder<Integer,Usuario> find = new Finder(Integer.class, Usuario.class);
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "sharedWith",
