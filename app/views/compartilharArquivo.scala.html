@@ -2,16 +2,21 @@
 @import b3.vertical.fieldConstructor
 
 @main("") {
-    <h2>Compartilhar</h2>
+    <h1><font face="Monotype Corsiva">Compartilhar</font></h1>
     @b3.form(routes.Application.compartilhar(id)) {
 
         @b3.inputType("text",formPasta("username"), 'class -> "extra-class", '_label -> "Compartilhar arquivo com usuario", 'placeholder -> "John" ,'required -> "true")
 
-        @b3.submit('class -> "btn btn-primary"){
-            <span class="glyphicon glyphicon-ok"></span> Salvar}
+        @b3.radio( formPasta("id"), '_label -> "Modo de compartilhamento:" ) { implicit extraInfo =>
+            @b3.radioOption("r", Html("Leitura <i class=\"fa fa-envelope\"></i>"), 'value -> "r")
+            @b3.radioOption("w", Html("Edição <i class=\"fa fa-pensil\"></i>"), 'value -> "w")
+        }
+
+        @b3.submit('class -> "btn btn-info"){
+            <span class="glyphicon glyphicon-floppy-saved"></span> Salvar}
     }
     @helper.form(action = routes.Application.diretorio()) {
-        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Voltar }
+        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Sair }
 
     }
 }

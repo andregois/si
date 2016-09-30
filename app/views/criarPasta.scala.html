@@ -2,12 +2,12 @@
 @import b3.vertical.fieldConstructor
 
 @main("") {
-    <h2>Criar Pasta</h2>
+    <h1><font face="Monotype Corsiva">Criar Pasta</font></h1>
     @b3.form(routes.Application.novaPasta(id)) {
 
         @b3.inputType( "text", formPasta("name"), 'class -> "extra_class", '_label -> "Nome", 'placeholder -> "Nome da pasta" ,'required -> "true")
 
-        @b3.submit('class -> "btn btn-primary"){ <span class="glyphicon glyphicon-ok"></span> Salvar}
+        @b3.submit('class -> "btn btn-info"){ <span class="glyphicon glyphicon-floppy-saved"></span> Salvar}
 
 
     }

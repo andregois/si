@@ -1,42 +1,73 @@
-@(arquivos: List[Arquivo],pastas: List[Pasta] , id: String)
+@(arquivos: List[Arquivo],pastas: List[Pasta] , id: String, name: String)
 @import b3.vertical.fieldConstructor
 
 @main("") {
 
-    @if(pastas.isEmpty) {
-        <h3>Não há Pastas</h3>
-        <hr>
-    } else {
-        <h3>Minhas Pastas:</h3>
-        @for(pasta <- pastas) {
-            @b3.static(){<a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()</a>)}
-        }
-    }
+    <h1 style="margin-left: 1em"><p class="text-info"><font face="Monotype Corsiva">@name</p></font></h1>
+    <hr>
 
-    @if(arquivos.isEmpty) {
-        <h3>Não há Arquivos</h3>
-    } else {
-        <h3>Arquivos Cadastrados:</h3>
-        @for(arquivo <- arquivos) {
-            @b3.static(){<a href="@routes.Application.arquivo(arquivo.getId())">@arquivo.getName()</a>}
-        }
-    }
-
+    <table class="table table-bordered">
+        <div class="col-md-5">
+            @if(pastas.isEmpty) {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Não há pastas.</font></h2>
+                <hr>
+            } else {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Minhas pastas:</font></h2>
+                @for(pasta <- pastas) {
+                    @b3.static() {
+                        <span>
+                            <a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()">
+                            @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                                <span class="glyphicon glyphicon-folder-open">
+                                    <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
+                                </span> }
+                            </a>
+                        </span>
+                    }
+                }
+            }
+        </div>
+        <div class="col-md-5">
+            @if(arquivos.isEmpty) {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Não há arquivos.</font></h2>
+                <hr>
+            } else {
+                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos na pasta:</font></h2>
+                @for(arquivo <- arquivos) {
+                    @b3.static() {
+                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName()>
+                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                            <span class="glyphicon glyphicon-file">
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
+                            </span>
+                        }
+                        </a>
+                    }
+                }
+            }
+        </div>
     <hr>
 
     <table>
         <tr>
             <th>
             @b3.form(action = routes.Application.formularioNovoArquivo(id)) {
-                @b3.buttonType("new_file", 'class -> "btn btn-primary"){
+                @b3.buttonType("new_file", 'class -> "btn btn-info"){
                     <span class="glyphicon glyphicon-file"></span> Novo arquivo }
             }
             </th>
 
             <th>
             @b3.form(action = routes.Application.formularioNovaPasta(id)) {
-                @b3.buttonType("new_folder", 'class -> "btn btn-primary"){
-                    <span class="glyphicon glyphicon-lock"></span> Nova Pasta }
+                @b3.buttonType("new_folder", 'class -> "btn btn-info"){
+                    <span class="glyphicon glyphicon-folder-open"></span> Nova Pasta }
+            }
+            </th>
+
+            <th>
+            @b3.form(action = routes.Application.formularioEditarPasta(id)){
+                @b3.buttonType("new_folder", 'class -> "btn btn-info"){
+                    <span class="glyphicon glyphicon-pencil"></span> Editar pasta }
             }
             </th>
         </tr>

@@ -5,25 +5,36 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 public class Usuario extends Model {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private String id;
     @Column(unique = true)
     private String email;
     @Column(unique = true)
-    private String username;
+    public String username;
     private String password;
+    private String authToken;
 
-    @ManyToMany(mappedBy = "sharedWith")
+    public static Finder<Integer,Usuario> find = new Finder(Integer.class, Usuario.class);
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "sharedWith",
+            targetEntity = Arquivo.class)
     private List<Arquivo> sharedWithMe;
+
+    @ManyToMany(mappedBy = "sharedReadOnly")
+    private List<Arquivo> sharedReadOnlyWhithMe;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Pasta root;
 
     public Usuario() {
         this.sharedWithMe = Lists.newArrayList();
+        this.sharedReadOnlyWhithMe = Lists.newArrayList();
         this.root = new Pasta();
     }
 
@@ -67,6 +78,14 @@ public class Usuario extends Model {
         this.sharedWithMe = sharedWithMe;
     }
 
+    public List<Arquivo> getSharedReadOnlyWhithMe() {
+        return sharedReadOnlyWhithMe;
+    }
+
+    public void setSharedReadOnlyWithMe(List<Arquivo> sharedReadOnlyWithMe) {
+        this.sharedReadOnlyWhithMe = sharedReadOnlyWithMe;
+    }
+
     public Pasta getRoot() {
         return root;
     }
@@ -84,6 +103,7 @@ public class Usuario extends Model {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", sharedWithMe=" + sharedWithMe +
+                ", sharedReadOnlyWhithMe=" + sharedReadOnlyWhithMe +
                 ", root=" + root +
                 '}';
     }

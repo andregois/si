@@ -1,29 +1,37 @@
 @(formArquivo: Form[Arquivo], id: String, arquivo: Arquivo)
 @import b3.vertical.fieldConstructor
+@extension = @{ Seq("txt"->"txt","md"->"md") }
 
 @main("") {
-    <h2>Editar Arquivo</h2>
+    <h1><font face="Monotype Corsiva">Editar Arquivo</font></h1>
     @b3.form(routes.Application.editarArquivo(id)) {
 
-        @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome do arquivo", 'value -> arquivo.getName, 'placeholder -> "", 'required -> "true")
+        <table>
+            <th>
+                @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome do arquivo", 'value -> arquivo.getName, 'placeholder -> "", 'required -> "true")
+            </th>
+            <th>
+                @b3.select( formArquivo("extension"), options = extension, '_label -> "Extensão", 'value -> arquivo.getExtension )
+            </th>
+        </table>
 
         @b3.textarea(formArquivo("content"), '_label -> "", 'value -> arquivo.getContent, 'rows -> 5, 'required -> "true")
 
         <table>
             <th>
-                @b3.form(routes.Application.editarArquivo(id)){
-                    @b3.buttonType("file", 'class -> "btn btn-primary"){
-                        <span class="glyphicon glyphicon-ok"></span> Salvar }
-                }
+                @b3.buttonType("file", 'class -> "btn btn-info", 'name -> "action", 'value -> "salvar"){
+                    <span class="glyphicon glyphicon-floppy-saved"></span> Salvar }
+
             </th>
             <th>
-                @b3.submit('class -> "btn btn-primary") {
-                    <span class="glyphicon glyphicon-ok"></span> Concluir}
+                @b3.buttonType("file", 'class -> "btn btn-info", 'name -> "action", 'value -> "concluir"){
+                    <span class="glyphicon glyphicon-check"></span> Concluir }
             </th>
         </table>
     }
+
     @helper.form(action = routes.Application.diretorio()) {
         @b3.submit('class -> "btn btn-danger"){
-            <span class="glyphicon glyphicon-remove"></span> Cancelar }
+            <span class="glyphicon glyphicon-remove"></span> Sair }
     }
 }

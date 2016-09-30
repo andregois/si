@@ -19,6 +19,9 @@ import static play.data.Form.form;
 
 public class Application extends Controller {
 
+    private static final String MODO_R = "r";
+    private static final String MODO_W = "w";
+
     public static Result index() {
         Form<Usuario> form = form(Usuario.class);
         return ok(index.render(form));
@@ -31,7 +34,6 @@ public class Application extends Controller {
             return badRequest(cadastro.render(form));
         }
         Usuario usuario = form.get();
-        Logger.info("Novo Usuario Cadastrado: " + usuario.toString());
         usuario.save();
         return redirect(routes.Application.index());
     }
@@ -41,12 +43,11 @@ public class Application extends Controller {
         return ok(cadastro.render(form));
     }
 
-
+    //@Security.Authenticated(ActionAuthenticator.class)
     public static Result login() {
         Form<Usuario> form = Form.form(Usuario.class).bindFromRequest();
 
         Usuario usuario = form.get();
-        Logger.info("Logando usuario: " + usuario.toString());
         Usuario user = Ebean.createQuery(Usuario.class).
                 where().
                 and(eq("username", usuario.getUsername()), eq("password", usuario.getPassword())).findUnique();
@@ -54,11 +55,9 @@ public class Application extends Controller {
         if (user == null) {
             return redirect(routes.Application.index());
         } else {
-            Logger.info("Usuario Logado : " + usuario.toString());
             session("username", user.getUsername());
             session("id", user.getId());
             session("root", user.getRoot().getId());
-            Logger.info("Usuario Logado 2 : " + user.toString());
             return redirect(routes.Application.diretorio());
         }
 
@@ -73,9 +72,10 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result diretorio() {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        user.getUsername();
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
 
-        return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe()));
+        return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
     }
 
     @Security.Authenticated(Secured.class)
@@ -91,7 +91,6 @@ public class Application extends Controller {
 
         Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
         pasta.getFiles().add(arquivo);
-        Logger.info("Pasta: " + pasta.toString());
         pasta.update();
         return redirect(routes.Application.pasta(id));
 
@@ -106,22 +105,28 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result editarArquivo(String id) {//id da pasta
+        String[] postAction = request().body().asFormUrlEncoded().get("action");
         Form<Arquivo> form = form(Arquivo.class).bindFromRequest();
         Arquivo arquivo = form.get();
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
         arq.setName(arquivo.getName());
         arq.setContent(arquivo.getContent());
+        arq.setExtension(arquivo.getExtension());
         arq.update();
-        Logger.info("Pasta: " + arq.toString());
-
-        return redirect(routes.Application.arquivo(id));
-
+        String action = postAction[0];
+        if ("salvar".equals(action)) {
+            return redirect(routes.Application.editarArquivo(id));
+        } else {
+            return redirect(routes.Application.arquivo(id, MODO_W));
+        }
     }
 
+
+
     @Security.Authenticated(Secured.class)
-    public static Result arquivo(String id) {
+    public static Result arquivo(String id, String modo) {
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
-        return ok(arquivo.render(arq));
+        return ok(arquivo.render(arq, modo));
     }
 
     @Security.Authenticated(Secured.class)
@@ -131,10 +136,9 @@ public class Application extends Controller {
             return redirect(routes.Application.diretorio());
         } else {
             Pasta pastas = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
-            Logger.info("Pasta: " + pastas.toString());
             List<Arquivo> arquivos = pastas.getFiles();
             List<Pasta> pastasFilha = pastas.getFolders();
-            return ok(pasta.render(arquivos, pastasFilha, id));
+            return ok(pasta.render(arquivos, pastasFilha, id, pastas.getName()));
         }
 
     }
@@ -155,8 +159,27 @@ public class Application extends Controller {
 
         Pasta pastaPai = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
         pastaPai.getFolders().add(pasta);
-        Logger.info("PastaPai : " + pastaPai.toString());
         pastaPai.update();
+
+        return redirect(routes.Application.pasta(id));
+
+    }
+
+
+    @Security.Authenticated(Secured.class)
+    public static Result formularioEditarPasta(String id) {
+        Form<Pasta> form = form(Pasta.class);
+        Pasta file = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
+        return ok(RenomearPasta.render(form, id, file));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result editarPasta(String id) {//id da pasta
+        Form<Pasta> form = form(Pasta.class).bindFromRequest();
+        Pasta file = form.get();
+        Pasta file2 = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
+        file2.setName(file.getName());
+        file2.update();
 
         return redirect(routes.Application.pasta(id));
 
@@ -173,16 +196,18 @@ public class Application extends Controller {
     public static Result compartilhar(String id) {
         Form<Usuario> form = form(Usuario.class).bindFromRequest();
         Usuario usuario = form.get();
-        Logger.info("Compartilhando: " + usuario.toString());
         Usuario user = Ebean.createQuery(Usuario.class).where().eq("username", usuario.getUsername()).findUnique();
         if (user != null) {
             Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
             arq.setCompartilhado(true);
-            arq.getSharedWith().add(user);
+            if (usuario.getId().equals("w")) {
+                arq.getSharedWith().add(user);
+            } else if (usuario.getId().equals("r")) {
+                arq.getSharedReadOnly().add(user);
+            }
             arq.update();
         }
-        return redirect(routes.Application.arquivo(id));
+        return redirect(routes.Application.arquivo(id, MODO_W));
     }
-
 
 }

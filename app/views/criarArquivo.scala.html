@@ -1,17 +1,17 @@
 @(formArquivo: Form[Arquivo], id: String)
-@extension = @{ Seq("A"->"txt","M"->"md") }
+@extension = @{ Seq("txt"->"txt","md"->"md") }
 
     @import b3.vertical.fieldConstructor
 
     @main("") {
-    <h2>Criar Arquivo</h2>
+    <h1><font face="Monotype Corsiva">Criar Arquivo</font></h1>
     @b3.form(routes.Application.novoArquivo(id)) {
         <table>
             <th>
                 @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome", 'placeholder -> "Nome Do Arquivo.txt",'required -> "true")
             </th>
             <th>
-                @b3.select( formArquivo("foo"), options = extension, '_label -> "Extensão" )
+                @b3.select( formArquivo("extension"), options = extension, '_label -> "Extensão" )
             </th>
         </table>
 
@@ -19,19 +19,19 @@
 
         <table>
             <th>
-                @b3.submit('class -> "btn btn-primary") {
-                    <span class="glyphicon glyphicon-ok"></span> Salvar}
+                @b3.submit('class -> "btn btn-info") {
+                    <span class="glyphicon glyphicon-floppy-saved"></span> Salvar}
             </th>
             <th>
-                @b3.reset('class -> "btn btn-danger") {
-                <span class="glyphicon glyphicon-remove"></span> Limpar }
+                @b3.reset('class -> "btn btn-warning") {
+                <span class="glyphicon glyphicon-exclamation-sign"></span> Limpar }
             </th>
         </table>
 
     }
 
     @helper.form(action = routes.Application.diretorio()) {
-        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Voltar }
+        @b3.submit('class -> "btn btn-danger"){ <span class="glyphicon glyphicon-remove"></span> Sair }
 
     }
 
