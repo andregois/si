@@ -31,10 +31,16 @@ public class Usuario extends Model {
     @OneToOne(cascade = CascadeType.ALL)
     private Pasta root;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pasta trash;
+
     public Usuario() {
         this.sharedWithMe = Lists.newArrayList();
         this.sharedReadOnlyWhithMe = Lists.newArrayList();
         this.root = new Pasta();
+        this.trash = new Pasta();
+        this.trash.setName("Lixeira");
+        this.root.getFolders().add(this.trash);
     }
 
     public String getId() {
@@ -87,6 +93,10 @@ public class Usuario extends Model {
 
     public Pasta getRoot() {
         return root;
+    }
+
+    public Pasta getTrash() {
+        return trash;
     }
 
     public void setRoot(Pasta root) {

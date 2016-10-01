@@ -58,6 +58,7 @@ public class Application extends Controller {
             session("username", user.getUsername());
             session("id", user.getId());
             session("root", user.getRoot().getId());
+            session("trash", user.getTrash().getId());
             return redirect(routes.Application.diretorio());
         }
 

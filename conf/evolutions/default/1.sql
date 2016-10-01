@@ -26,6 +26,7 @@ create table usuario (
   username                  varchar(255),
   password                  varchar(255),
   root_id                   varchar(255),
+  trash_id                  varchar(255),
   constraint uq_usuario_email unique (email),
   constraint uq_usuario_username unique (username),
   constraint pk_usuario primary key (id))
@@ -55,6 +56,8 @@ alter table pasta add constraint fk_pasta_pai_2 foreign key (pai_id) references 
 create index ix_pasta_pai_2 on pasta (pai_id);
 alter table usuario add constraint fk_usuario_root_3 foreign key (root_id) references pasta (id) on delete restrict on update restrict;
 create index ix_usuario_root_3 on usuario (root_id);
+alter table usuario add constraint fk_usuario_trash_4 foreign key (trash_id) references pasta (id) on delete restrict on update restrict;
+create index ix_usuario_trash_4 on usuario (trash_id);
 
 
 
