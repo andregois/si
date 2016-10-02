@@ -13,6 +13,8 @@ public class Arquivo extends Model {
     @Id @GeneratedValue
     private String id;
 
+    private String paiID;
+
     @ManyToMany(targetEntity = Usuario.class,
                 cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "SharedRW", joinColumns =@JoinColumn(name = "sharedrw_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "userRW_id"))
@@ -40,6 +42,14 @@ public class Arquivo extends Model {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPaiID() {
+        return paiID;
+    }
+
+    public void setPaiID(String paiID) {
+        this.paiID = paiID;
     }
 
     public List<Usuario> getSharedWith() {

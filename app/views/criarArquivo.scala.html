@@ -6,6 +6,12 @@
     @main("") {
     <h1><font face="Monotype Corsiva">Criar Arquivo</font></h1>
     @b3.form(routes.Application.novoArquivo(id)) {
+        @b3.hidden("paiID", id)
+        @*        @b3.hidden( "paiID", id, '_hiddenLabel -> "paiID", 'placeholder -> id )
+
+        <input type = <hidden> name = <"paiID"> value = <id>>
+        @b3.hiddens("paiID" -> id) *@
+
         <table>
             <th>
                 @b3.inputType("text", formArquivo("name"), 'class -> "extra_class", '_label -> "Nome", 'placeholder -> "Nome Do Arquivo.txt",'required -> "true")

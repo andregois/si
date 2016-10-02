@@ -7,10 +7,12 @@ import models.Usuario;
 import play.Logger;
 import play.data.Form;
 import play.mvc.*;
+import sun.rmi.runtime.Log;
 import views.html.*;
 
 import javax.validation.constraints.Past;
 import java.util.List;
+import java.util.logging.LoggingMXBean;
 
 import static com.avaje.ebean.Expr.*;
 
@@ -211,4 +213,116 @@ public class Application extends Controller {
         return redirect(routes.Application.arquivo(id, MODO_W));
     }
 
+    public static Result deletarArquivo(String id) {
+
+        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        //Pasta pastaPai = Ebean.createQuery(Pasta.class).where().idEq(arq.getPaiID()).findUnique();
+
+        Arquivo arqTemp = new Arquivo();
+        arqTemp.setName(arq.getName());
+        arqTemp.setContent(arq.getContent());
+        arqTemp.setSharedReadOnly(arq.getSharedReadOnly());
+        arqTemp.setSharedWith(arq.getSharedWith());
+        arqTemp.setExtension(arq.getExtension());
+        arqTemp.setPaiID(arq.getPaiID());
+
+        arq.getSharedWith().clear();
+        arq.getSharedReadOnly().clear();
+        arq.update();
+        Logger.info("size - " + arq.getSharedReadOnly().size() + "");
+        Logger.info("size - " + arq.getSharedWith().size() + "");
+
+        if (arqTemp.getSharedReadOnly().contains(user)) {
+            arqTemp.getSharedReadOnly().remove(user);
+            //pastaPai.getFiles().add(arqTemp);
+        } else if (arqTemp.getSharedWith().contains(user)) {
+            arqTemp.getSharedWith().remove(user);
+            //pastaPai.getFiles().add(arqTemp);
+        }
+        // pastaPai.update();
+        // adicionando o arquivo na pasta lixeira
+        Pasta lixeira = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(session("trash")).findUnique();
+        Logger.info("pasta size - " + lixeira.getFiles().size() + "");
+        lixeira.getFiles().add(arqTemp);
+        lixeira.update();
+
+        arq.delete();
+
+        Logger.info("pasta - " + lixeira.getName());
+        Logger.info("pasta size - " + lixeira.getFiles().size() + "");
+
+        Logger.info("arq id - " + arq.getPaiID() + "");
+        Logger.info("id pai - " + session("root") + "");
+
+        return redirect(routes.Application.diretorio());
+    }
+
+    public static Result deletarPasta(String id){
+
+        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        Pasta pasta = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
+        Pasta lixeira = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(session("trash")).findUnique();
+
+        Logger.info("pasta nome - "+pasta.getName()+"");
+        Logger.info("pasta id - "+pasta.getId()+"");
+        Pasta pastaTemp = new Pasta();
+        pastaTemp.setName(pasta.getName());
+        lixeira.getFolders().add(pastaTemp);
+        lixeira.update();
+
+        limpaPastas(pasta);
+        pasta.update();
+        pasta.delete();
+
+        return redirect(routes.Application.diretorio());
+    }
+
+    public static void limpaArquivo(Arquivo arq1) {
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(arq1.getId()).findUnique();
+        arq.getSharedWith().clear();
+        arq.getSharedReadOnly().clear();
+        arq.update();
+        arq.delete();
+    }
+
+    public static void limpaPastas(Pasta pasta1) {
+        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(pasta1.getId()).findUnique();
+        if (pasta.getFolders().size() > 0) {
+            for (Pasta p : pasta.getFolders()) {
+                Pasta p2 = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(p.getId()).findUnique();
+                limpaPastas(p2);
+                p2.update();
+                p2.delete();
+            }
+        }
+        if (pasta.getFiles().size() > 0) {
+            for (Arquivo a: pasta.getFiles()) {
+                limpaArquivo(a);
+            }
+
+        }
+    }
+
+    public static Result limparLixeira(){
+
+        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        Pasta lixeira = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(session("trash")).findUnique();
+
+        Logger.info("pasta size fi - " + lixeira.getFiles().size() + "");
+        Logger.info("pasta size fo - " + lixeira.getFolders().size() + "");
+
+        limpaPastas(lixeira);
+        Logger.info("Limpa lixeira fi- " +lixeira.getFiles().size()+"");
+        Logger.info("Limpa lixeira fo - " +lixeira.getFolders().size()+"");
+        lixeira.getFiles().clear();
+        lixeira.getFolders().clear();
+
+        Logger.info("pasta size fi - " + lixeira.getFiles().size() + "");
+        Logger.info("pasta size fo - " + lixeira.getFolders().size() + "");
+
+        lixeira.update();
+
+        return redirect(routes.Application.diretorio());
+    }
 }

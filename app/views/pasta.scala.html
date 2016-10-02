@@ -6,6 +6,7 @@
     <h1 style="margin-left: 1em"><p class="text-info"><font face="Monotype Corsiva">@name</p></font></h1>
     <hr>
 
+    @if(id != session().get("trash")) {
     <table class="table table-bordered">
         <div class="col-md-5">
             @if(pastas.isEmpty) {
@@ -16,7 +17,7 @@
                 @for(pasta <- pastas) {
                     @b3.static() {
                         <span>
-                            <a href="@routes.Application.pasta(pasta.getId())">@pasta.getName()">
+                            <a href="@routes.Application.pasta(pasta.getId())">
                             @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
                                 <span class="glyphicon glyphicon-folder-open">
                                     <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
@@ -35,7 +36,7 @@
                 <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos na pasta:</font></h2>
                 @for(arquivo <- arquivos) {
                     @b3.static() {
-                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">@arquivo.getName()>
+                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
                         @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
                             <span class="glyphicon glyphicon-file">
                                 <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
@@ -46,34 +47,100 @@
                 }
             }
         </div>
-    <hr>
-
-    <table>
-        <tr>
-            <th>
-            @b3.form(action = routes.Application.formularioNovoArquivo(id)) {
-                @b3.buttonType("new_file", 'class -> "btn btn-info"){
-                    <span class="glyphicon glyphicon-file"></span> Novo arquivo }
-            }
-            </th>
-
-            <th>
-            @b3.form(action = routes.Application.formularioNovaPasta(id)) {
-                @b3.buttonType("new_folder", 'class -> "btn btn-info"){
-                    <span class="glyphicon glyphicon-folder-open"></span> Nova Pasta }
-            }
-            </th>
-
-            <th>
-            @b3.form(action = routes.Application.formularioEditarPasta(id)){
-                @b3.buttonType("new_folder", 'class -> "btn btn-info"){
-                    <span class="glyphicon glyphicon-pencil"></span> Editar pasta }
-            }
-            </th>
-        </tr>
     </table>
+    <hr>
+    } else {
+    <table class="table table-bordered">
+        <div class="col-md-5">
+        @if(pastas.isEmpty) {
+            <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Não há pastas.</font></h2>
+            <hr>
+        } else {
+            <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Minhas pastas:</font></h2>
+            @for(pasta <- pastas) {
+                @b3.static() {
+                    <span>
+                        @*<a href="@routes.Application.pasta(pasta.getId())">*@
+                        @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
+                            <span class="glyphicon glyphicon-folder-open">
+                                <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
+                            </span> }
+                        @*</a>*@
+                    </span>
+                }
+            }
+        }
+        </div>
+        <div class="col-md-5">
+        @if(arquivos.isEmpty) {
+            <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Não há arquivos.</font></h2>
+            <hr>
+        } else {
+            <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos na pasta:</font></h2>
+            @for(arquivo <- arquivos) {
+                @b3.static() {
+                    @*<a href="@routes.Application.arquivo(arquivo.getId(), "w")">*@
+                    @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                        <span class="glyphicon glyphicon-file">
+                            <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
+                        </span>
+                    }
+                    @*</a>*@
+                }
+            }
+        }
+        </div>
+    </table>
+    <hr>
+    }
 
-    @helper.form(action = routes.Application.diretorio()) {
+    @if(id != session().get("trash")) { @*name != "Lixeira") {*@
+    @*(pasta.getId() != session("trash").getId*@
+
+        <table>
+            <tr>
+                <th>
+                @b3.form(action = routes.Application.formularioNovoArquivo(id)) {
+                    @b3.buttonType("new_file", 'class -> "btn btn-info") {
+                        <span class="glyphicon glyphicon-file"></span> Novo arquivo }
+                }
+                </th>
+
+                <th>
+                @b3.form(action = routes.Application.formularioNovaPasta(id)) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-info") {
+                        <span class="glyphicon glyphicon-folder-open"></span> Nova Pasta }
+                }
+                </th>
+
+                <th>
+                @b3.form(action = routes.Application.formularioEditarPasta(id)) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-info") {
+                        <span class="glyphicon glyphicon-pencil"></span> Editar pasta }
+                }
+                </th>
+                <th>
+                @b3.form(action = routes.Application.deletarPasta(id)) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-warning") {
+                        <span class="glyphicon glyphicon-trash"></span> Excluir pasta }
+                }
+                </th>
+            </tr>
+        </table>
+
+    } else {
+
+        <table>
+            <th>
+                @b3.form(action = routes.Application.limparLixeira()) {
+                    @b3.buttonType("new_file", 'class -> "btn btn-warning") {
+                        <span class="glyphicon glyphicon-trash"></span> Limpar lixeira }
+                }
+            </th>
+        </table>
+    }
+
+            @helper.form(action = routes.Application.diretorio()) {
         @b3.submit('class -> "btn btn-danger"){
             <span class="glyphicon glyphicon-remove"></span> Cancelar }
     }

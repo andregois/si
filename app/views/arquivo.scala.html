@@ -25,6 +25,13 @@
                         <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
                 }
             </th>
+            <th>
+            @b3.form(action = routes.Application.deletarArquivo(arquivo.getId())) {
+                @b3.buttonType("new_folder", 'class -> "btn btn-warning") {
+                    <span class="glyphicon glyphicon-trash"></span> Excluir arquivo }
+            }
+            </th>
+
         </table>
     } else {
         <table>
@@ -40,6 +47,14 @@
                         <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
                 }
             </th>
+
+            <th>
+                @b3.form(action = routes.Application.deletarArquivo(arquivo.getId())) {
+                    @b3.buttonType("new_folder", 'class -> "btn btn-warning") {
+                        <span class="glyphicon glyphicon-trash"></span> Excluir arquivo }
+                }
+            </th>
+
         </table>
     }
 

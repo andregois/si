@@ -29,9 +29,10 @@ POST    /pasta/:id/novo                   controllers.Application.novaPasta(id: 
 GET     /pasta/:id/editar                 controllers.Application.formularioEditarPasta(id: String)
 POST    /pasta/:id/editar                 controllers.Application.editarPasta(id: String)
 
+POST     /lixeiraArq/:id                  controllers.Application.deletarArquivo(id: String)
+POST     /lixeiraPasta/:id                controllers.Application.deletarPasta(id: String)
 
-
-
+POST    /limparLixeira                    controllers.Application.limparLixeira()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

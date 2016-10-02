@@ -6,6 +6,7 @@
 create table arquivo (
   id                        varchar(255) not null,
   pasta_id                  varchar(255) not null,
+  pai_id                    varchar(255),
   name                      varchar(255),
   content                   varchar(255),
   compartilhado             boolean,
