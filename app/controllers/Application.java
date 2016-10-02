@@ -217,7 +217,6 @@ public class Application extends Controller {
 
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
         Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
-        //Pasta pastaPai = Ebean.createQuery(Pasta.class).where().idEq(arq.getPaiID()).findUnique();
 
         Arquivo arqTemp = new Arquivo();
         arqTemp.setName(arq.getName());
@@ -230,30 +229,19 @@ public class Application extends Controller {
         arq.getSharedWith().clear();
         arq.getSharedReadOnly().clear();
         arq.update();
-        Logger.info("size - " + arq.getSharedReadOnly().size() + "");
-        Logger.info("size - " + arq.getSharedWith().size() + "");
 
         if (arqTemp.getSharedReadOnly().contains(user)) {
             arqTemp.getSharedReadOnly().remove(user);
-            //pastaPai.getFiles().add(arqTemp);
         } else if (arqTemp.getSharedWith().contains(user)) {
             arqTemp.getSharedWith().remove(user);
-            //pastaPai.getFiles().add(arqTemp);
         }
-        // pastaPai.update();
-        // adicionando o arquivo na pasta lixeira
+
         Pasta lixeira = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(session("trash")).findUnique();
         Logger.info("pasta size - " + lixeira.getFiles().size() + "");
         lixeira.getFiles().add(arqTemp);
         lixeira.update();
 
         arq.delete();
-
-        Logger.info("pasta - " + lixeira.getName());
-        Logger.info("pasta size - " + lixeira.getFiles().size() + "");
-
-        Logger.info("arq id - " + arq.getPaiID() + "");
-        Logger.info("id pai - " + session("root") + "");
 
         return redirect(routes.Application.diretorio());
     }
@@ -264,8 +252,6 @@ public class Application extends Controller {
         Pasta pasta = Ebean.createQuery(Pasta.class).where().idEq(id).findUnique();
         Pasta lixeira = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(session("trash")).findUnique();
 
-        Logger.info("pasta nome - "+pasta.getName()+"");
-        Logger.info("pasta id - "+pasta.getId()+"");
         Pasta pastaTemp = new Pasta();
         pastaTemp.setName(pasta.getName());
         lixeira.getFolders().add(pastaTemp);
@@ -309,17 +295,11 @@ public class Application extends Controller {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
         Pasta lixeira = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(session("trash")).findUnique();
 
-        Logger.info("pasta size fi - " + lixeira.getFiles().size() + "");
-        Logger.info("pasta size fo - " + lixeira.getFolders().size() + "");
 
         limpaPastas(lixeira);
-        Logger.info("Limpa lixeira fi- " +lixeira.getFiles().size()+"");
-        Logger.info("Limpa lixeira fo - " +lixeira.getFolders().size()+"");
+
         lixeira.getFiles().clear();
         lixeira.getFolders().clear();
-
-        Logger.info("pasta size fi - " + lixeira.getFiles().size() + "");
-        Logger.info("pasta size fo - " + lixeira.getFolders().size() + "");
 
         lixeira.update();
 
