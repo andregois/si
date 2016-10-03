@@ -1,23 +1,19 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Arquivo;
 import models.Pasta;
 import models.Usuario;
 import play.Logger;
 import play.data.Form;
-import play.mvc.*;
-import sun.rmi.runtime.Log;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security;
 import views.html.*;
 
-import javax.validation.constraints.Past;
 import java.util.List;
-import java.util.logging.LoggingMXBean;
 
-import static com.avaje.ebean.Expr.*;
-
-
+import static com.avaje.ebean.Expr.eq;
 import static play.data.Form.form;
 
 public class Application extends Controller {
@@ -81,7 +77,6 @@ public class Application extends Controller {
     @Security.Authenticated(ActionAuthenticator.class)
     public static Result diretorio() {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
-//        user.getUsername();
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
 
         return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));

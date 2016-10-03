@@ -1,13 +1,9 @@
 package controllers;
 
 import models.Usuario;
-import org.h2.engine.User;
-import org.jboss.logging.Logger;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-
-import java.util.Arrays;
 
 public class ActionAuthenticator extends Security.Authenticator {
     @Override
