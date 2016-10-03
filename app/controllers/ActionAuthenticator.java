@@ -7,17 +7,20 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import java.util.Arrays;
+
 public class ActionAuthenticator extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context ctx) {
         String token = getTokenFromHeader(ctx);
-//        if (token != null) {
-//            Usuario user = Usuario.find.where().eq("authToken", token).findUnique();
-//            if (user != null) {
-//                return user.username;
-//            }
-//        }
-        //TODO
+        play.Logger.info(token);
+        if (token != null) {
+            Usuario user = Usuario.find.where().eq("authToken", token).findUnique();
+            if (user != null) {
+                return user.username;
+            }
+       }
+
         return null;
     }
 
@@ -27,10 +30,6 @@ public class ActionAuthenticator extends Security.Authenticator {
     }
 
     private String getTokenFromHeader(Http.Context ctx) {
-        String[] authTokenHeaderValues = ctx.request().headers().get("X-AUTH-TOKEN");
-        if ((authTokenHeaderValues != null) && (authTokenHeaderValues.length == 1) && (authTokenHeaderValues[0] != null)) {
-            return authTokenHeaderValues[0];
-        }
-        return null;
+        return ctx.request().cookie("X-AUTH-TOKEN").value();
     }
 }

@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Arquivo;
 import models.Pasta;
 import models.Usuario;
@@ -23,6 +24,7 @@ public class Application extends Controller {
 
     private static final String MODO_R = "r";
     private static final String MODO_W = "w";
+    private static final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
 
     public static Result index() {
         Form<Usuario> form = form(Usuario.class);
@@ -45,7 +47,6 @@ public class Application extends Controller {
         return ok(cadastro.render(form));
     }
 
-    //@Security.Authenticated(ActionAuthenticator.class)
     public static Result login() {
         Form<Usuario> form = Form.form(Usuario.class).bindFromRequest();
 
@@ -61,6 +62,9 @@ public class Application extends Controller {
             session("id", user.getId());
             session("root", user.getRoot().getId());
             session("trash", user.getTrash().getId());
+
+            String authToken = user.createToken();
+            response().setCookie(AUTH_TOKEN_HEADER, authToken);
             return redirect(routes.Application.diretorio());
         }
 
@@ -68,11 +72,13 @@ public class Application extends Controller {
 
 
     public static Result deslogar() {
+        Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique().logout();
         session().clear();
+        response().discardCookie(AUTH_TOKEN_HEADER);
         return redirect(routes.Application.index());
     }
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(ActionAuthenticator.class)
     public static Result diretorio() {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
 //        user.getUsername();
