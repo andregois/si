@@ -213,6 +213,32 @@ public class Application extends Controller {
         }
         return redirect(routes.Application.arquivo(id, MODO_W));
     }
+    
+    public static Result formularioComprimirArquivos() {
+        //Falta Editar
+        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        user.getUsername();
+        Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
+        return ok(comprimirArquivos.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
+    }
+
+    public static Result comprimirArquivosZIP() {
+        //Falta Editar
+        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        user.getUsername();
+        Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
+
+        return ok(comprimirArquivos.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
+    }
+
+    public static Result comprimirArquivosGZIP() {
+        //Falta Editar
+        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+        user.getUsername();
+        Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
+
+        return ok(comprimirArquivos.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
+    }
 
     public static Result deletarArquivo(String id) {
 

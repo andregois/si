@@ -16,6 +16,9 @@ GET     /arquivo/:id/novo                   controllers.Application.formularioNo
 POST    /arquivo/:id/novo                   controllers.Application.novoArquivo(id: String)
 GET     /arquivo/:id/editar                 controllers.Application.formularioEditarArquivo(id: String)
 POST    /arquivo/:id/editar                 controllers.Application.editarArquivo(id: String)
+GET     /arquivo/comprimir                controllers.Application.formularioComprimirArquivos()
+POST    /arquivo/comprimirZIP             controllers.Application.comprimirArquivosZIP()
+POST    /arquivo/comprimirGZIP            controllers.Application.comprimirArquivosGZIP()
 
 GET     /compartilhar/:id                   controllers.Application.formularioCompartilhar(id: String)
 POST    /compartilhar/:id                   controllers.Application.compartilhar(id: String)
