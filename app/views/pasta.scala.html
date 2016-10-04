@@ -3,24 +3,24 @@
 
 @main("") {
 
-    <h1 style="margin-left: 1em"><p class="text-info">@name</p></font></h1>
+    <h1 style="margin-left: 1em"><p class="text-info">@name</p></h1>
     <hr>
 
     @if(id != session().get("trash")) {
     <table class="table table-bordered">
         <div class="col-md-5">
             @if(pastas.isEmpty) {
-                <h2 style="margin-left: 1em">Não há pastas.</font></h2>
+                <h2 style="margin-left: 1em">Não há pastas.</h2>
                 <hr>
             } else {
-                <h2 style="margin-left: 1em">Minhas pastas:</font></h2>
+                <h2 style="margin-left: 1em">Minhas pastas:</h2>
                 @for(pasta <- pastas) {
                     @b3.static() {
                         <span>
                             <a href="@routes.Application.pasta(pasta.getId())">
                             @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
                                 <span class="glyphicon glyphicon-folder-open">
-                                    <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
+                                    <span style="margin-left: 1em"><font size="3">@pasta.getName()</span>
                                 </span> }
                             </a>
                         </span>
@@ -30,18 +30,17 @@
         </div>
         <div class="col-md-5">
             @if(arquivos.isEmpty) {
-                <h2 style="margin-left: 1em">Não há arquivos.</font></h2>
+                <h2 style="margin-left: 1em">Não há arquivos.</h2>
                 <hr>
             } else {
-                <h2 style="margin-left: 1em"><Arquivos na pasta:</font></h2>
+                <h2 style="margin-left: 1em"><Arquivos na pasta:</h2>
                 @for(arquivo <- arquivos) {
                     @if(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP")) {
                         @b3.static() {
                             <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
                             @b3.buttonType("new_btn", 'class -> "btn btn-danger") {
                                 <span class="glyphicon glyphicon-file">
-                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().
-                                        @arquivo.getExtension</font></span>
+                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</span>
                                 </span>
                             }
                             </a>
@@ -51,8 +50,7 @@
                             <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
                             @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
                                 <span class="glyphicon glyphicon-file">
-                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().
-                                        @arquivo.getExtension</font></span>
+                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</span>
                                 </span>
                             }
                             </a>
@@ -67,17 +65,17 @@
     <table class="table table-bordered">
         <div class="col-md-5">
         @if(pastas.isEmpty) {
-            <h2 style="margin-left: 1em">Não há pastas.</font></h2>
+            <h2 style="margin-left: 1em">Não há pastas.</h2>
             <hr>
         } else {
-            <h2 style="margin-left: 1em">Minhas pastas:</font></h2>
+            <h2 style="margin-left: 1em">Minhas pastas:</h2>
             @for(pasta <- pastas) {
                 @b3.static() {
                     <span>
                         @*<a href="@routes.Application.pasta(pasta.getId())">*@
                         @b3.buttonType("new_btn", 'class -> "btn btn-warning btn-xs") {
                             <span class="glyphicon glyphicon-folder-open">
-                                <span style="margin-left: 1em"><font size="3">@pasta.getName()</font></span>
+                                <span style="margin-left: 1em"><font size="3">@pasta.getName()</span>
                             </span> }
                         @*</a>*@
                     </span>
@@ -87,18 +85,17 @@
         </div>
         <div class="col-md-5">
         @if(arquivos.isEmpty) {
-            <h2 style="margin-left: 1em">Não há arquivos.</font></h2>
+            <h2 style="margin-left: 1em">Não há arquivos.</h2>
             <hr>
         } else {
-            <h2 style="margin-left: 1em">Arquivos na pasta:</font></h2>
+            <h2 style="margin-left: 1em">Arquivos na pasta:</h2>
             @for(arquivo <- arquivos) {
                 @if(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP")) {
                     @b3.static() {
                         <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
                         @b3.buttonType("new_btn", 'class -> "btn btn-danger") {
                             <span class="glyphicon glyphicon-file">
-                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().
-                                    @arquivo.getExtension</font></span>
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</span>
                             </span>
                         }
                         </a>
@@ -108,8 +105,7 @@
                         @*<a href="@routes.Application.arquivo(arquivo.getId(), "w")">*@
                         @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
                             <span class="glyphicon glyphicon-file">
-                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().
-                                    @arquivo.getExtension</font></span>
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</span>
                             </span>
                         }
                         @*</a>*@

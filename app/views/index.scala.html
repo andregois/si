@@ -8,7 +8,7 @@
         <th>
         @b3.buttonType("new_btn", 'class -> "btn btn-info btn-lg") {
             <span class="glyphicon glyphicon-cloud">
-                <p class="text-info"><font face="Monotype Corsiva", size="15"><b><i>Drivebox</i></b></font></span> }
+                <p class="text-info"><font size="15"><b><i>Drivebox</i></b></font></span> }
         </th>
     </table>
 
@@ -16,7 +16,7 @@
         <div class="col-md-3">
         </div>
         <div class="col-md-6">
-            <h1><font face="Monotype Corsiva">Login</font></h1>
+            <h1>Login</h1>
             @b3.form(action = routes.Application.login()) {
 
                 @b3.inputType("text", formCupom("username"), 'class -> "extra_class", '_label -> "Name",'required -> "true" , 'placeholder -> "John")

@@ -35,10 +35,10 @@
     <table class="table table-bordered">
         <div class="col-md-4">
             @if(pastas.isEmpty) {
-                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue pastas.</font></h2>
+                <h2 style="margin-left: 1em">Você não possue pastas.</h2>
                 <hr>
             } else {
-                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Minhas pastas:</font></h2>
+                <h2 style="margin-left: 1em">Minhas pastas:</h2>
                 @for(pasta <- pastas) {
                     @b3.static() {
                         <span>
@@ -55,10 +55,10 @@
         </div>
         <div class="col-md-4">
             @if(arquivos.isEmpty) {
-                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Você não possue arquivos.</font></h2>
+                <h2 style="margin-left: 1em">Você não possue arquivos.</h2>
                 <hr>
             } else {
-                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Meus arquivos:</font></h2>
+                <h2 style="margin-left: 1em">Meus arquivos:</h2>
                 @for(arquivo <- arquivos) {
                     @if(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP")){
                         @b3.static() {
@@ -86,10 +86,10 @@
         </div>
         <div class="col-md-4">
             @if(compartilhadosW.isEmpty && compartilhadosR.isEmpty) {
-                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Nenhum arquivo compartilhado com você.</font></h2>
+                <h2 style="margin-left: 1em">Nenhum arquivo compartilhado com você.</h2>
                 <hr>
             } else {
-                <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos compartilhados comigo:</font></h2>
+                <h2 style="margin-left: 1em">Arquivos compartilhados comigo:</h2>
                 @for(arquivo <- compartilhadosW) {
                     @if(arquivo.getCompartilhado() == true) {
                         @arquivo.setCompartilhado(false)
