@@ -41,12 +41,14 @@
                         <span class="glyphicon glyphicon-envelope"></span> Compartilhar arquivo }
                 }
             </th>
+            @if(!(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP"))){
             <th>
                 @b3.form(action = routes.Application.formularioEditarArquivo(arquivo.getId())) {
                     @b3.buttonType("new_folder", 'class -> "btn btn-info") {
                         <span class="glyphicon glyphicon-pencil"></span> Editar arquivo }
                 }
             </th>
+            }
 
             <th>
                 @b3.form(action = routes.Application.deletarArquivo(arquivo.getId())) {

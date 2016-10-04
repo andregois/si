@@ -225,7 +225,6 @@ public class Application extends Controller {
 
         Arquivo arqTemp = new Arquivo();
         arqTemp.setName(arq.getName());
-        arqTemp.setContent(arq.getContent());
         arqTemp.setSharedReadOnly(arq.getSharedReadOnly());
         arqTemp.setSharedWith(arq.getSharedWith());
         arqTemp.setExtension("ZIP");
@@ -245,7 +244,6 @@ public class Application extends Controller {
 
         Arquivo arqTemp = new Arquivo();
         arqTemp.setName(arq.getName());
-        arqTemp.setContent(arq.getContent());
         arqTemp.setSharedReadOnly(arq.getSharedReadOnly());
         arqTemp.setSharedWith(arq.getSharedWith());
         arqTemp.setExtension("GZIP");
