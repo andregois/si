@@ -232,7 +232,7 @@ public class Application extends Controller {
         comprimir.setZip(arq.getId());
         arqTemp.setZIP(comprimir.getZip());
 
-        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+        Pasta pasta = Ebean.createQuery(Pasta.class).where().idEq(arq.getPaiID()).findUnique();
         pasta.getFiles().add(arqTemp);
         pasta.update();
         return redirect(routes.Application.diretorio());
@@ -251,7 +251,7 @@ public class Application extends Controller {
         comprimir.setGzip(id);
         arqTemp.setGZIP(comprimir.getGzip());
 
-        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+        Pasta pasta = Ebean.createQuery(Pasta.class).where().idEq(arq.getPaiID()).findUnique();
         pasta.getFiles().add(arqTemp);
         pasta.update();
         return redirect(routes.Application.diretorio());
