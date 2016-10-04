@@ -35,14 +35,28 @@
             } else {
                 <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos na pasta:</font></h2>
                 @for(arquivo <- arquivos) {
-                    @b3.static() {
-                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
-                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
-                            <span class="glyphicon glyphicon-file">
-                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
-                            </span>
+                    @if(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP")) {
+                        @b3.static() {
+                            <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                            @b3.buttonType("new_btn", 'class -> "btn btn-danger") {
+                                <span class="glyphicon glyphicon-file">
+                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().
+                                        @arquivo.getExtension</font></span>
+                                </span>
+                            }
+                            </a>
                         }
-                        </a>
+                    } else {
+                        @b3.static() {
+                            <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                            @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                                <span class="glyphicon glyphicon-file">
+                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().
+                                        @arquivo.getExtension</font></span>
+                                </span>
+                            }
+                            </a>
+                        }
                     }
                 }
             }
@@ -78,14 +92,28 @@
         } else {
             <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Arquivos na pasta:</font></h2>
             @for(arquivo <- arquivos) {
-                @b3.static() {
-                    @*<a href="@routes.Application.arquivo(arquivo.getId(), "w")">*@
-                    @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
-                        <span class="glyphicon glyphicon-file">
-                            <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
-                        </span>
+                @if(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP")) {
+                    @b3.static() {
+                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                        @b3.buttonType("new_btn", 'class -> "btn btn-danger") {
+                            <span class="glyphicon glyphicon-file">
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().
+                                    @arquivo.getExtension</font></span>
+                            </span>
+                        }
+                        </a>
                     }
-                    @*</a>*@
+                } else {
+                    @b3.static() {
+                        @*<a href="@routes.Application.arquivo(arquivo.getId(), "w")">*@
+                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                            <span class="glyphicon glyphicon-file">
+                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().
+                                    @arquivo.getExtension</font></span>
+                            </span>
+                        }
+                        @*</a>*@
+                    }
                 }
             }
         }
