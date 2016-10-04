@@ -2,25 +2,28 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import models.Arquivo;
+import models.Comprimir;
 import models.Pasta;
 import models.Usuario;
 import play.Logger;
 import play.data.Form;
-import play.mvc.Controller;
-import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.*;
 import views.html.*;
 
+import javax.validation.constraints.Past;
 import java.util.List;
+import java.util.logging.LoggingMXBean;
+import java.util.zip.ZipOutputStream;
 
-import static com.avaje.ebean.Expr.eq;
+import static com.avaje.ebean.Expr.*;
+
+
 import static play.data.Form.form;
 
 public class Application extends Controller {
 
     private static final String MODO_R = "r";
     private static final String MODO_W = "w";
-    private static final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
 
     public static Result index() {
         Form<Usuario> form = form(Usuario.class);
@@ -43,6 +46,7 @@ public class Application extends Controller {
         return ok(cadastro.render(form));
     }
 
+    //@Security.Authenticated(ActionAuthenticator.class)
     public static Result login() {
         Form<Usuario> form = Form.form(Usuario.class).bindFromRequest();
 
@@ -58,9 +62,6 @@ public class Application extends Controller {
             session("id", user.getId());
             session("root", user.getRoot().getId());
             session("trash", user.getTrash().getId());
-
-            String authToken = user.createToken();
-            response().setCookie(AUTH_TOKEN_HEADER, authToken);
             return redirect(routes.Application.diretorio());
         }
 
@@ -68,15 +69,14 @@ public class Application extends Controller {
 
 
     public static Result deslogar() {
-        Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique().logout();
         session().clear();
-        response().discardCookie(AUTH_TOKEN_HEADER);
         return redirect(routes.Application.index());
     }
 
-    @Security.Authenticated(ActionAuthenticator.class)
+    @Security.Authenticated(Secured.class)
     public static Result diretorio() {
         Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
+//        user.getUsername();
         Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
 
         return ok(diretorio.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
@@ -213,31 +213,50 @@ public class Application extends Controller {
         }
         return redirect(routes.Application.arquivo(id, MODO_W));
     }
-    
-    public static Result formularioComprimirArquivos() {
-        //Falta Editar
-        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
-        user.getUsername();
-        Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
-        return ok(comprimirArquivos.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
+
+    public static Result formularioComprimirZIP(String id) {
+        Form<Usuario> form = form(Usuario.class);
+        return ok(compartilharArquivo.render(form, id));
     }
 
-    public static Result comprimirArquivosZIP() {
-        //Falta Editar
-        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
-        user.getUsername();
-        Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
+    public static Result comprimirArquivosZIP(String id) {
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        Comprimir comprimir = new Comprimir();
 
-        return ok(comprimirArquivos.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
+        Arquivo arqTemp = new Arquivo();
+        arqTemp.setName(arq.getName());
+        arqTemp.setContent(arq.getContent());
+        arqTemp.setSharedReadOnly(arq.getSharedReadOnly());
+        arqTemp.setSharedWith(arq.getSharedWith());
+        arqTemp.setExtension("ZIP");
+        arqTemp.setPaiID(arq.getPaiID());
+        comprimir.setZip(arq.getId());
+        arqTemp.setZIP(comprimir.getZip());
+
+        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+        pasta.getFiles().add(arqTemp);
+        pasta.update();
+        return redirect(routes.Application.diretorio());
     }
 
-    public static Result comprimirArquivosGZIP() {
-        //Falta Editar
-        Usuario user = Ebean.createQuery(Usuario.class).where().idEq(session("id")).findUnique();
-        user.getUsername();
-        Pasta raiz = Ebean.createQuery(Pasta.class).where().idEq(user.getRoot().getId()).findUnique();
+    public static Result comprimirArquivosGZIP(String id) {
+        Arquivo arq = Ebean.createQuery(Arquivo.class).where().idEq(id).findUnique();
+        Comprimir comprimir = new Comprimir();
 
-        return ok(comprimirArquivos.render(raiz.getFiles(), raiz.getFolders(), user.getSharedWithMe(), user.getSharedReadOnlyWhithMe()));
+        Arquivo arqTemp = new Arquivo();
+        arqTemp.setName(arq.getName());
+        arqTemp.setContent(arq.getContent());
+        arqTemp.setSharedReadOnly(arq.getSharedReadOnly());
+        arqTemp.setSharedWith(arq.getSharedWith());
+        arqTemp.setExtension("GZIP");
+        arqTemp.setPaiID(arq.getPaiID());
+        comprimir.setGzip(id);
+        arqTemp.setGZIP(comprimir.getGzip());
+
+        Pasta pasta = Ebean.createQuery(Pasta.class).fetch("files").where().idEq(id).findUnique();
+        pasta.getFiles().add(arqTemp);
+        pasta.update();
+        return redirect(routes.Application.diretorio());
     }
 
     public static Result deletarArquivo(String id) {

@@ -60,14 +60,26 @@
             } else {
                 <h2 style="margin-left: 1em"><font face="Monotype Corsiva">Meus arquivos:</font></h2>
                 @for(arquivo <- arquivos) {
-                    @b3.static() {
-                        <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
-                        @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
-                            <span class="glyphicon glyphicon-file">
-                                <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
-                            </span>
+                    @if(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP")){
+                        @b3.static() {
+                            <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                            @b3.buttonType("new_btn", 'class -> "btn btn-danger") {
+                                <span class="glyphicon glyphicon-file">
+                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
+                                </span>
+                            }
+                            </a>
                         }
-                        </a>
+                    }else{
+                        @b3.static() {
+                            <a href="@routes.Application.arquivo(arquivo.getId(), "w")">
+                            @b3.buttonType("new_btn", 'class -> "btn btn-info btn-xs") {
+                                <span class="glyphicon glyphicon-file">
+                                    <span style="margin-left: 1em"><font size="3">@arquivo.getName().@arquivo.getExtension</font></span>
+                                </span>
+                            }
+                            </a>
+                        }
                     }
                 }
             }
@@ -143,12 +155,6 @@
             @b3.form(action = routes.Application.formularioNovaPasta(session().get("root"))) {
                 @b3.buttonType("new_folder", 'class -> "btn btn-info") {
                     <span class="glyphicon glyphicon-folder-open"></span> Nova Pasta }
-            }
-            </th>
-            <th>
-            @b3.form(action = routes.Application.formularioComprimirArquivos()) {
-                @b3.buttonType("compress", 'class -> "btn btn-info") {
-                    <span class="glyphicon glyphicon-folder-open"></span> Comprimir }
             }
             </th>
 

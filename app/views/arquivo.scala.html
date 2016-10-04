@@ -56,6 +56,29 @@
             </th>
 
         </table>
+
+        @if(!(arquivo.getExtension.equals("ZIP") || arquivo.getExtension.equals("GZIP"))){
+        <hr>
+        <table align="center">
+            <h2>Comprimir Com:</h2>
+            <td>
+        <th>
+            @b3.form(action = routes.Application.comprimirArquivosZIP(arquivo.getId())) {
+                @b3.buttonType("compress", 'class -> "btn btn-info") {
+                    <span class="glyphicon glyphicon-folder-open"></span> ZIP }
+            }
+        </th>
+            </td>
+            <td>
+        <th>
+            @b3.form(action = routes.Application.comprimirArquivosGZIP(arquivo.getId())) {
+                @b3.buttonType("compress", 'class -> "btn btn-info") {
+                    <span class="glyphicon glyphicon-folder-open"></span> GZIP }
+            }
+        </th>
+            </td>
+        </table>
+        }
     }
 
     @b3.form(action = routes.Application.diretorio()) {

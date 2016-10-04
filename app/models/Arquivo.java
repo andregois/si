@@ -6,6 +6,8 @@ import com.google.common.collect.Lists;
 import play.db.ebean.Model;
 
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipOutputStream;
 
 @Entity
 public class Arquivo extends Model {
@@ -30,6 +32,8 @@ public class Arquivo extends Model {
     private String content;
     private boolean compartilhado;
     private String extension;
+    private ZipOutputStream ZIP;
+    private GZIPOutputStream GZIP;
 
     public Arquivo() {
         this.sharedWith = Lists.newArrayList();
@@ -95,6 +99,14 @@ public class Arquivo extends Model {
     public boolean getCompartilhado() {return compartilhado;}
 
     public void setCompartilhado(boolean compartilhado){ this.compartilhado = compartilhado; }
+
+    public void setZIP(ZipOutputStream zip){ this.ZIP = zip; }
+
+    public ZipOutputStream getZIP(){return ZIP;}
+
+    public void setGZIP(GZIPOutputStream gzip){ this.GZIP = gzip; }
+
+    public GZIPOutputStream getGZIP(){return GZIP;}
 
     @Override
     public String toString() {
